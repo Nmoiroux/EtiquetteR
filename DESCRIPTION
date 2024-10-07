@@ -4,6 +4,8 @@ Version: 0.0.0.9000
 Authors@R: 
     person("Nicolas", "Moiroux", , "nicolas.moiroux@ird.fr", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-6755-6167"))
+    person("Nil", "Rahola", , "nil.rahola@ird.fr", role = c("aut"),
+           comment = c(ORCID = "0000-0003-4067-6438"))
 Description: What the package does (one paragraph).
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
