@@ -1,6 +1,3 @@
-library(tidyverse)
-
-
 #' @title Create LaTeX Header for Mosquito Labels Document
 #'
 #' @description 
@@ -164,14 +161,17 @@ print_header <- function(file_out, lab_size = 15, n_col = 8){
 #' @examples
 #' # Example usage:
 #' # print_line("output.tex", ind_list, print_info, line_n = 1)
-#'
+#' @importFrom dplyr arrange mutate if_else filter select group_by summarise
+#' @importFrom purrr pmap_chr
+#' @importFrom stringr str_c
 #' @export
 #### create labels per each line of the table
+
 print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = "N", hl_col = "orange"){
 	
 	v_ind <- ind_list[line_n,] %>% as.vector() %>% unlist() # retrieve data on the specified row number
 	
-	print_info <- print_info %>% arrange(factor(field_name, levels = names(v_ind)))
+	print_info <- print_info %>% dplyr::arrange(factor(field_name, levels = names(v_ind)))
 	
 	ifelse(identical(names(v_ind), print_info$field_name), # verify that var. names correspond between data table and print parameters table
 				 print_info$data <- unname(v_ind),
@@ -182,24 +182,24 @@ print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = "N",
 	N_individuals <- v_ind[col_N_name] %>% as.integer() # retrieve the number of individuals that fit information in this row (to be used to duplicate labels)
 	
 	print_info <- print_info %>% # latex code for each information is prepared according to user-defined print parameters
-		mutate(print_txt = if_else(print == 1, data, NA, NA)) %>% # retrieve data only for column containing information to print
-		filter(!(is.na(print_txt))) %>% # filter dataset to keep only information to be printed (remove blank fields)
-		mutate(print_txt = if_else(print_opt_it == 1, str_c("{\\scinm ", print_txt, "}"), print_txt, print_txt)) %>% # add latex code for italic
-		mutate(print_txt = if_else(print_opt_par == 1, str_c("(", print_txt, ")"), print_txt, print_txt)) %>% # add brackets
-		mutate(print_txt = if_else(print_sex_symbol == 1 , str_c("\\",print_txt," "), print_txt, print_txt)) %>% 
-		mutate(print_txt = if_else(print_opt_hl == 1, str_c("\\begingroup\\fboxsep=0pt\\colorbox{",hl_col,"}{",print_txt,"}\\endgroup"), print_txt, print_txt)) %>% 
-		mutate(field_name_to_print = if_else(print_field_name == 1 & is.na(field_name_to_print), field_name, field_name_to_print)) %>% # define field name to print before information, if specified
-		mutate(print_txt = pmap_chr(list(print_txt, print_field_name,field_name_to_print), function(x,y,z) if_else(y == 1, 
-																																																							 str_c(z," ", x), x, x))) %>%# add a field name before information to print, if specified
-		mutate(print_txt = if_else(line_break == 1, str_c(print_txt, "\\","\\"), print_txt, print_txt)) # add latex code for break line
+		dplyr::mutate(print_txt = dplyr::if_else(print == 1, data, NA, NA)) %>% # retrieve data only for column containing information to print
+		dplyr::filter(!(is.na(print_txt))) %>% # filter dataset to keep only information to be printed (remove blank fields)
+		dplyr::mutate(print_txt = dplyr::if_else(print_opt_it == 1, stringr::str_c("{\\scinm ", print_txt, "}"), print_txt, print_txt)) %>% # add latex code for italic
+		dplyr::mutate(print_txt = dplyr::if_else(print_opt_par == 1, stringr::str_c("(", print_txt, ")"), print_txt, print_txt)) %>% # add brackets
+		#dplyr::mutate(print_txt = dplyr::if_else(print_sex_symbol == 1 , stringr::str_c("\\",print_txt," "), print_txt, print_txt)) %>% 
+		dplyr::mutate(print_txt = dplyr::if_else(print_opt_hl == 1, stringr::str_c("\\begingroup\\fboxsep=0pt\\colorbox{",hl_col,"}{",print_txt,"}\\endgroup"), print_txt, print_txt)) %>% 
+		dplyr::mutate(field_name_to_print = dplyr::if_else(print_field_name == 1 & is.na(field_name_to_print), field_name, field_name_to_print)) %>% # define field name to print before information, if specified
+		dplyr::mutate(print_txt = purrr::pmap_chr(list(print_txt, print_field_name,field_name_to_print), function(x,y,z) dplyr::if_else(y == 1, 
+																																																							 stringr::str_c(z," ", x), x, x))) %>%# add a field name before information to print, if specified
+		dplyr::mutate(print_txt = dplyr::if_else(line_break == 1, stringr::str_c(print_txt, "\\","\\"), print_txt, print_txt)) # add latex code for break line
 	
 	# concatenate Latex code / Info to print for each individual label
 	labels <- print_info %>% 
-		filter(print==1) %>%
-		arrange(label_no, order_lab) %>% 
-		select(label_no, print_txt) %>%
-		group_by(label_no) %>%
-		summarise(print_lab = paste(print_txt, collapse = " ")) 
+		dplyr::filter(print==1) %>%
+		dplyr::arrange(label_no, order_lab) %>% 
+		dplyr::select(label_no, print_txt) %>%
+		dplyr::group_by(label_no) %>%
+		dplyr::summarise(print_lab = paste(print_txt, collapse = " ")) 
 	
 	# add code to the Latex file
 	cat(paste0("

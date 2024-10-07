@@ -47,5 +47,4 @@ The function generates LaTeX code for individual labels and appends it to the sp
 \examples{
 # Example usage:
 # print_line("output.tex", ind_list, print_info, line_n = 1)
-
 }
