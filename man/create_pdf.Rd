@@ -23,6 +23,14 @@ for one label to be printed in the LaTeX document.}
 
 \item{print_info}{A data frame specifying the parameters for printing, including field names,
 formatting options, and what data to print.}
+
+\item{lab_size}{An integer specifying the size (in mm) for the label (default is 15 mm).}
+
+\item{n_col}{An integer specifying the number of label columns in the LaTeX document (default is 8 columns).}
+
+\item{col_N_name}{A character string specifying the column name to be used for labels duplication (default is "N").}
+
+\item{hl_col}{A character string specifying the highlight color for specific elements (default is "orange").}
 }
 \value{
 The function creates a LaTeX file, compiles it into a PDF, and saves the output
@@ -38,10 +46,10 @@ This function first calls \code{print_header} to write the beginning of the LaTe
 document. Then, it iterates over each row of \code{ind_list}, calling \code{print_line}
 to generate labels according to the provided \code{print_info}. After all labels are printed,
 it appends the LaTeX document footer using \code{print_bottom}. Finally, it compiles the
-LaTeX document into a PDF using \code{texi2pdf}.
+LaTeX document into a PDF using \code{pdflatex}.
 }
 \examples{
 # Example usage:
-# create_pdf("output.tex", ind_list, print_info)
+# create_pdf("output.tex", ind_list, print_info, lab_size = 20, n_col = 10)
 
 }
