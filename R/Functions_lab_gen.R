@@ -190,7 +190,7 @@ print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = "N",
 		mutate(print_txt = if_else(print_opt_hl == 1, str_c("\\begingroup\\fboxsep=0pt\\colorbox{",hl_col,"}{",print_txt,"}\\endgroup"), print_txt, print_txt)) %>% 
 		mutate(field_name_to_print = if_else(print_field_name == 1 & is.na(field_name_to_print), field_name, field_name_to_print)) %>% # define field name to print before information, if specified
 		mutate(print_txt = pmap_chr(list(print_txt, print_field_name,field_name_to_print), function(x,y,z) if_else(y == 1, 
-																																																							 str_c(z,": ", x), x, x))) %>%# add a field name before information to print, if specified
+																																																							 str_c(z," ", x), x, x))) %>%# add a field name before information to print, if specified
 		mutate(print_txt = if_else(line_break == 1, str_c(print_txt, "\\","\\"), print_txt, print_txt)) # add latex code for break line
 	
 	# concatenate Latex code / Info to print for each individual label
