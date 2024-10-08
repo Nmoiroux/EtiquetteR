@@ -187,7 +187,7 @@ print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = "N",
 		dplyr::mutate(print_txt = dplyr::if_else(print_opt_it == 1, stringr::str_c("{\\scinm ", print_txt, "}"), print_txt, print_txt)) %>% # add latex code for italic
 		dplyr::mutate(print_txt = dplyr::if_else(print_opt_par == 1, stringr::str_c("(", print_txt, ")"), print_txt, print_txt)) %>% # add brackets
 		#dplyr::mutate(print_txt = dplyr::if_else(print_sex_symbol == 1 , stringr::str_c("\\",print_txt," "), print_txt, print_txt)) %>% 
-		dplyr::mutate(print_txt = dplyr::if_else(print_opt_hl == 1, stringr::str_c("\\begingroup\\fboxsep=0pt\\colorbox{",hl_col,"}{",print_txt,"}\\endgroup"), print_txt, print_txt)) %>% 
+		dplyr::mutate(print_txt = dplyr::if_else(print_opt_hl == 1, stringr::str_c("\\begingroup\\fboxsep=0pt\\colorbox{",hl_col,"}{",print_txt,"}\\endgroup\\"), print_txt, print_txt)) %>% 
 		dplyr::mutate(field_name_to_print = dplyr::if_else(print_field_name == 1 & is.na(field_name_to_print), field_name, field_name_to_print)) %>% # define field name to print before information, if specified
 		dplyr::mutate(print_txt = purrr::pmap_chr(list(print_txt, print_field_name,field_name_to_print), function(x,y,z) dplyr::if_else(y == 1, 
 																																																							 stringr::str_c(z," ", x), x, x))) %>%# add a field name before information to print, if specified
