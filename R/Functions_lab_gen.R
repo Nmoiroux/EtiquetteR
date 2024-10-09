@@ -1,14 +1,3 @@
-data_table_mngmt <- function(ind_list, col_N_name = "N"){
-  
-  # check that field 'N' (containing the number of label to print per row in ind_list) exists
-  if("N" %in% names(ind_list)){
-    ind_list[,col_N_name] <- ind_list[,col_N_name] %>% as.integer # conversion to integer if it exists
-  } else {
-    ind_list[,col_N_name] <- ind_list[,col_N_name] %>% as.integer(1) # creation and filling with 1 if it doent
-  }
-  
-  return(ind_list)
-}
 #' @title Convert Sex Data to LaTeX Format
 #'
 #' @description
