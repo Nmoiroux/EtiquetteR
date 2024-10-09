@@ -1,3 +1,53 @@
+data_table_mngmt <- function(ind_list, col_N_name = "N"){
+  
+  # check that field 'N' (containing the number of label to print per row in ind_list) exists
+  if("N" %in% names(ind_list)){
+    ind_list[,col_N_name] <- ind_list[,col_N_name] %>% as.integer # conversion to integer if it exists
+  } else {
+    ind_list[,col_N_name] <- ind_list[,col_N_name] %>% as.integer(1) # creation and filling with 1 if it doent
+  }
+  
+  return(ind_list)
+}
+#' @title Convert Sex Data to LaTeX Format
+#'
+#' @description
+#' This function converts a string representing sex data into the appropriate LaTeX code for displaying male or female symbols in small font.
+#'
+#' @param sex_data A character string representing the sex of an individual. It can start with "f" or "F" for female, "m" or "M" for male, or it can be \code{NA}.
+#'
+#' @return A character string containing the corresponding LaTeX code: \code{"\\smallfemale"} for female, \code{"\\smallmale"} for male, or \code{NA} if the input is not recognized or is \code{NA}.
+#'
+#' @details
+#' The function checks the first letter of the input string. If it starts with "f" or "F", it returns the LaTeX code for the female symbol. If it starts with "m" or "M", it returns the LaTeX code for the male symbol. If the input is \code{NA} or unrecognized, the function returns \code{NA}.
+#'
+#' @examples
+#' # Example usage:
+#' sex_to_latex("female") # Returns "\\smallfemale"
+#' sex_to_latex("male")   # Returns "\\smallmale"
+#' sex_to_latex(NA)       # Returns NA
+#' 
+#' @importFrom stringr str_starts
+#'
+#' @export
+sex_to_latex <- function(sex_data){
+  if (is.na(sex_data)){
+    sex_return <- NA
+  }
+  else if (str_starts(sex_data, "f|F")) {
+    sex_return <- "\\smallfemale"
+    }
+  else if (str_starts(sex_data, "m|M")) {
+    sex_return <- "\\smallmale"
+  }
+  else {
+    sex_return <- NA
+  }
+  return(sex_return)
+}
+
+v_sex_to_latex <- Vectorize(sex_to_latex)
+
 #' @title Create LaTeX Header for Mosquito Labels Document
 #'
 #' @description 
@@ -55,8 +105,8 @@ print_header <- function(file_out, lab_size = 15, n_col = 8){
 %-------------------------------------------------------------------------------
 % Set fonts and column types
 
-\\def\\supertiny{\\font\\supertinyfont = cmss10 at 5pt \\relax \\supertinyfont} 
-\\def\\supertinyitalic{\\font\\supertinyfont = cmssi10 at 5pt \\relax \\supertinyfont} 
+\\def\\supertiny{\\font\\supertinyfont = cmss10 at 4pt \\relax \\supertinyfont} 
+\\def\\supertinyitalic{\\font\\supertinyfont = cmssi10 at 4pt \\relax \\supertinyfont} 
 \\def\\supertinybold{\\font\\supertinyfont = cmssbx10 at 4pt \\relax \\supertinyfont} 
 \\newcommand{\\smallbold}[1]{\\supertinybold{#1}}
 \\newcommand{\\locnm}[1]{\\supertinybold{#1}}
@@ -65,6 +115,8 @@ print_header <- function(file_out, lab_size = 15, n_col = 8){
 
 \\newcommand{\\smallprime}{\\scalebox{0.4}{$^\\prime$}}
 \\newcommand{\\smalldegree}{\\scalebox{0.5}{\\textdegree}}
+\\newcommand{\\smallfemale}{\\scalebox{0.5}{\\Female}}
+\\newcommand{\\smallmale}{\\scalebox{0.5}{\\Male}}
 \\newcommand{\\detline}{\\\\ \\smallbold{det. SDJ Brown \\the\\year}}
 
 
@@ -84,7 +136,7 @@ print_header <- function(file_out, lab_size = 15, n_col = 8){
 \\setlength{\\parindent}{0pt} % retrait
 \\setlength{\\parskip}{0ex} % espacement vertical entre deux paragraphe (effet d'un //)
 \\setlength{\\columnsep}{1mm}
-\\linespread{0.5} % espacement entre les lignes d'un même paragrap
+\\linespread{0.3} % espacement entre les lignes d'un même paragrap
 
 \\pagestyle{empty}
 
@@ -115,7 +167,7 @@ print_header <- function(file_out, lab_size = 15, n_col = 8){
 }
 
 %hablabel provides an environment for entering the label data.
-\\newenvironment{hablabel}{\\tabularx{",lab_size,"mm}{@{}Y@{}}}
+\\newenvironment{hablabel}{\\tabularx{",lab_size,"mm}{@{}|Y|@{}}}
 {\\endtabularx}
 
 %-------------------------------------------------------------------------------
@@ -162,13 +214,14 @@ print_header <- function(file_out, lab_size = 15, n_col = 8){
 #' # Example usage:
 #' # print_line("output.tex", ind_list, print_info, line_n = 1)
 #' @importFrom dplyr arrange mutate if_else filter select group_by summarise
+#' @importFrom magrittr %>%
 #' @importFrom purrr pmap_chr
 #' @importFrom stringr str_c
 #' @export
 #### create labels per each line of the table
 
 print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = "N", hl_col = "orange"){
-	
+
 	v_ind <- ind_list[line_n,] %>% as.vector() %>% unlist() # retrieve data on the specified row number
 	
 	print_info <- print_info %>% dplyr::arrange(factor(field_name, levels = names(v_ind)))
@@ -178,16 +231,18 @@ print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = "N",
 				 print("Field names do not correspond or are not in the same order")
 	)
 	
-	N_labels <- max(print_info$label_no, na.rm = TRUE) # number of labels to print (per row)
-	N_individuals <- v_ind[col_N_name] %>% as.integer() # retrieve the number of individuals that fit information in this row (to be used to duplicate labels)
+	N_labels <- max(print_info$label_no, na.rm = TRUE) # number of labels to print (per individuals)
+	N_val <- v_ind[col_N_name] %>% as.integer()
+	N_individuals <- ifelse(is.na(N_val), 0, N_val) # retrieve the number of individuals that fit information in this row (to be used to duplicate labels)
+	
 	
 	print_info <- print_info %>% # latex code for each information is prepared according to user-defined print parameters
 		dplyr::mutate(print_txt = dplyr::if_else(print == 1, data, NA, NA)) %>% # retrieve data only for column containing information to print
+	  dplyr::mutate(print_txt = dplyr::if_else(print_sex_symbol == 1 , v_sex_to_latex(print_txt), print_txt, print_txt)) %>% # add Latex codes for sex symbols
 		dplyr::filter(!(is.na(print_txt))) %>% # filter dataset to keep only information to be printed (remove blank fields)
 		dplyr::mutate(print_txt = dplyr::if_else(print_opt_it == 1, stringr::str_c("{\\scinm ", print_txt, "}"), print_txt, print_txt)) %>% # add latex code for italic
 		dplyr::mutate(print_txt = dplyr::if_else(print_opt_par == 1, stringr::str_c("(", print_txt, ")"), print_txt, print_txt)) %>% # add brackets
-		#dplyr::mutate(print_txt = dplyr::if_else(print_sex_symbol == 1 , stringr::str_c("\\",print_txt," "), print_txt, print_txt)) %>% 
-		dplyr::mutate(print_txt = dplyr::if_else(print_opt_hl == 1, stringr::str_c("\\begingroup\\fboxsep=0pt\\colorbox{",hl_col,"}{",print_txt,"}\\endgroup\\"), print_txt, print_txt)) %>% 
+		dplyr::mutate(print_txt = dplyr::if_else(print_opt_hl == 1, stringr::str_c("\\begingroup\\fboxsep=0pt\\colorbox{",hl_col,"}{",print_txt,"}\\endgroup"), print_txt, print_txt)) %>% 
 		dplyr::mutate(field_name_to_print = dplyr::if_else(print_field_name == 1 & is.na(field_name_to_print), field_name, field_name_to_print)) %>% # define field name to print before information, if specified
 		dplyr::mutate(print_txt = purrr::pmap_chr(list(print_txt, print_field_name,field_name_to_print), function(x,y,z) dplyr::if_else(y == 1, 
 																																																							 stringr::str_c(z," ", x), x, x))) %>%# add a field name before information to print, if specified
@@ -210,13 +265,12 @@ print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = "N",
 	for (nlab in 1:N_labels){
 		cat(paste0("
 			 \\begin{lab_height}
-			 \\fbox{% Frame starts here
-			 \\begin{hablabel}",
-							 labels[nlab,2],"\\\
+			 \\begin{hablabel}
+		           \\hline \\\\[-1ex]",
+							 labels[nlab,2]," \\\\ 
+							 \\hline
 			 \\end{hablabel}
-			 } % Frame ends here
-			 \\end{lab_height}
-			%\\hrule"
+			 \\end{lab_height}"
 		), 
 		file = file_out, append = TRUE)
 	}
