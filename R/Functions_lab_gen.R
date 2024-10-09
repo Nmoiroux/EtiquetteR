@@ -18,7 +18,7 @@
 #' 
 #' @importFrom stringr str_starts
 #'
-#' @export
+#' 
 sex_to_latex <- function(sex_data){
   if (is.na(sex_data)){
     sex_return <- NA
@@ -58,7 +58,7 @@ v_sex_to_latex <- Vectorize(sex_to_latex)
 #' print_header("output.tex", lab_size = 20, n_col = 6)
 #' }
 #'
-#' @export
+#' 
 print_header <- function(file_out, lab_size = 15, n_col = 8){
 	# create an empty Latex output file
 	file.create(file_out)
@@ -206,7 +206,7 @@ print_header <- function(file_out, lab_size = 15, n_col = 8){
 #' @importFrom magrittr %>%
 #' @importFrom purrr pmap_chr
 #' @importFrom stringr str_c
-#' @export
+#' 
 #### create labels per each line of the table
 
 print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = "N", hl_col = "orange"){

@@ -28,4 +28,5 @@ allowing customization of label size and number of columns on the page.
 print_header("output.tex", lab_size = 20, n_col = 6)
 }
 
+
 }
