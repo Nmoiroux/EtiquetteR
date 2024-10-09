@@ -59,7 +59,7 @@ v_sex_to_latex <- Vectorize(sex_to_latex)
 #' }
 #'
 #' 
-print_header <- function(file_out, lab_size = 15, n_col = 8){
+print_header <- function(file_out, lab_width = 15,lab_heigth = 9, n_col = 8){
 	# create an empty Latex output file
 	file.create(file_out)
 	
@@ -84,11 +84,10 @@ print_header <- function(file_out, lab_size = 15, n_col = 8){
 %Load packages
 
 \\usepackage{multicol}
-\\usepackage{tabularx}
 \\usepackage{graphicx}
-\\usepackage{textcomp}
 \\usepackage{xcolor}
 \\usepackage{marvosym}
+\\usepackage{environ}
 \\usepackage[english]{babel}
 
 %-------------------------------------------------------------------------------
@@ -100,7 +99,6 @@ print_header <- function(file_out, lab_size = 15, n_col = 8){
 \\newcommand{\\smallbold}[1]{\\supertinybold{#1}}
 \\newcommand{\\locnm}[1]{\\supertinybold{#1}}
 \\newcommand{\\scinm}[1]{\\supertinyitalic{#1}}
-\\newcolumntype{Y}{>{\\raggedright\\arraybackslash}X}
 
 \\newcommand{\\smallprime}{\\scalebox{0.4}{$^\\prime$}}
 \\newcommand{\\smalldegree}{\\scalebox{0.5}{\\textdegree}}
@@ -114,18 +112,14 @@ print_header <- function(file_out, lab_size = 15, n_col = 8){
 \\newcounter{speclabel@}
 \\newcounter{speclabel@@}
 \\newsavebox{\\TMPspeclabel}
-\\newsavebox{\\BoxA}
-\\newsavebox{\\BoxB}
 
 
 %Set lengths and other options
 
-\\renewcommand{\\arraystretch}{0.7}
-\\renewcommand{\\tabcolsep}{1pt}
 \\setlength{\\parindent}{0pt} % retrait
 \\setlength{\\parskip}{0ex} % espacement vertical entre deux paragraphe (effet d'un //)
-\\setlength{\\columnsep}{1mm}
 \\linespread{0.3} % espacement entre les lignes d'un même paragrap
+\\setlength{\\fboxsep}{1pt} % espacement entre la box de l'étiquette et la bordure
 
 \\pagestyle{empty}
 
@@ -149,15 +143,13 @@ print_header <- function(file_out, lab_size = 15, n_col = 8){
 \\endgraf\\repeat}
 
 
-%lab_height fixes the height of each label to whatever size the strut in BoxB is.
-\\newenvironment{lab_height}{\\begin{tabular}{cc}}
-{& \\makebox{\\usebox{\\BoxB}}
-\\end{tabular}
-}
-
-%hablabel provides an environment for entering the label data.
-\\newenvironment{hablabel}{\\tabularx{",lab_size,"mm}{@{}|Y|@{}}}
-{\\endtabularx}
+% box_lab creates an environment for each label that is a parbox with width and heigth as parameters
+\\NewEnviron{boxlab}{%
+  \\fbox{\\parbox[t][",lab_heigth,"mm][t]{",lab_width,"mm}{%
+    \\raggedright
+      \\BODY
+    %
+   }}}
 
 %-------------------------------------------------------------------------------
 
@@ -166,12 +158,6 @@ print_header <- function(file_out, lab_size = 15, n_col = 8){
 \\begin{multicols*}{",n_col,"} % nombre de colonnes par page
 
 \\supertiny
-
-\\sbox{\\BoxB}{\\begin{tabularx}{0.1mm}{Y}
-	\\rule[-8mm]{0pt}{8mm}  % espace entre étiquettes
-	\\end{tabularx}
-}
-%Change \\rule from 0pt to view the strut. Can change the height from 8mm to modify the size of the label.
 "), 
 			file = file_out)}
 
@@ -253,13 +239,11 @@ print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = "N",
 	
 	for (nlab in 1:N_labels){
 		cat(paste0("
-			 \\begin{lab_height}
-			 \\begin{hablabel}
-		           \\hline \\\\[-1ex]",
-							 labels[nlab,2]," \\\\ 
-							 \\hline
-			 \\end{hablabel}
-			 \\end{lab_height}"
+			 \\begin{boxlab}
+		           ",
+							 labels[nlab,2],"
+			 \\end{boxlab}
+							 "
 		), 
 		file = file_out, append = TRUE)
 	}
@@ -333,9 +317,9 @@ print_bottom <- function(file_out){
 #'
 #' @export
 
-create_pdf <- function(file_out, ind_list, print_info,lab_size = 15, n_col = 8, col_N_name = "N", hl_col = "orange"){
+create_pdf <- function(file_out, ind_list, print_info,lab_width = 15, lab_heigth = 9, n_col = 8, col_N_name = "N", hl_col = "orange"){
 	# Step 1: Write the LaTeX document
-	print_header(file_out = file_out, lab_size, n_col)
+	print_header(file_out = file_out, lab_width, lab_heigth, n_col)
 	
 	# Step 2: Generate labels for each individual in the list
 	for (num in 1:nrow(ind_list)) {
