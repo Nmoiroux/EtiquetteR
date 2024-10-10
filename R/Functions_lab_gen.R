@@ -96,9 +96,9 @@ print_header <- function(file_out, lab_width = 15,lab_height = 9, font_size = 4,
 %-------------------------------------------------------------------------------
 % Set fonts and column types
 
-\\def\\supertiny{\\font\\supertinyfont = cmss10 at 4pt \\relax \\supertinyfont} 
-\\def\\supertinyitalic{\\font\\supertinyfont = cmssi10 at 4pt \\relax \\supertinyfont} 
-\\def\\supertinybold{\\font\\supertinyfont = cmssbx10 at 4pt \\relax \\supertinyfont} 
+\\def\\supertiny{\\font\\supertinyfont = cmss10 at ",font_size,"pt \\relax \\supertinyfont} 
+\\def\\supertinyitalic{\\font\\supertinyfont = cmssi10 at ",font_size,"pt \\relax \\supertinyfont} 
+\\def\\supertinybold{\\font\\supertinyfont = cmssbx10 at ",font_size,"pt \\relax \\supertinyfont} 
 \\newcommand{\\smallbold}[1]{\\supertinybold{#1}}
 \\newcommand{\\locnm}[1]{\\supertinybold{#1}}
 \\newcommand{\\scinm}[1]{\\supertinyitalic{#1}}
