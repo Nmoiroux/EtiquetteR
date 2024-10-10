@@ -8,7 +8,9 @@ create_pdf(
   file_out,
   ind_list,
   print_info,
-  lab_size = 15,
+  lab_width = 15,
+  lab_height = 9,
+  font_size = 4,
   n_col = 8,
   col_N_name = "N",
   hl_col = "orange"
@@ -24,7 +26,11 @@ for one label to be printed in the LaTeX document.}
 \item{print_info}{A data frame specifying the parameters for printing, including field names,
 formatting options, and what data to print.}
 
-\item{lab_size}{An integer specifying the size (in mm) for the label (default is 15 mm).}
+\item{lab_width}{An integer specifying the width (in mm) for the labels (default is 15 mm).}
+
+\item{lab_height}{An integer specifying the height (in mm) for the labels (default is 9).}
+
+\item{font_size}{A real (one digit) specifying the size of the font for the label (default is 4)}
 
 \item{n_col}{An integer specifying the number of label columns in the LaTeX document (default is 8 columns).}
 
@@ -50,6 +56,6 @@ LaTeX document into a PDF using \code{pdflatex}.
 }
 \examples{
 # Example usage:
-# create_pdf("output.tex", ind_list, print_info, lab_size = 20, n_col = 10)
+# create_pdf("output.tex", ind_list, print_info, lab_width = 15, lab_height = 9, font_size = 4, n_col = 8, col_N_name = "N", hl_col = "orange")
 
 }

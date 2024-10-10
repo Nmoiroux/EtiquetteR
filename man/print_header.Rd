@@ -4,12 +4,22 @@
 \alias{print_header}
 \title{Create LaTeX Header for Mosquito Labels Document}
 \usage{
-print_header(file_out, lab_size = 15, n_col = 8)
+print_header(
+  file_out,
+  lab_width = 15,
+  lab_height = 9,
+  font_size = 4,
+  n_col = 8
+)
 }
 \arguments{
 \item{file_out}{A character string specifying the name of the output file to write the LaTeX header to.}
 
-\item{lab_size}{An integer specifying the size (in mm) for the label environment (default is 15 mm).}
+\item{lab_width}{An integer specifying the width (in mm) for the labels (default is 15 mm).}
+
+\item{lab_height}{An integer specifying the height (in mm) for the labels (default is 9).}
+
+\item{font_size}{A real (one digit) specifying the size of the font for the label (default is 4)}
 
 \item{n_col}{An integer specifying the number of columns in the LaTeX document (default is 8 columns).}
 }
@@ -25,7 +35,7 @@ allowing customization of label size and number of columns on the page.
 }
 \examples{
 \dontrun{
-print_header("output.tex", lab_size = 20, n_col = 6)
+print_header("output.tex", lab_width = 20,lab_height = 10, font_size = 5, n_col = 7)
 }
 
 
