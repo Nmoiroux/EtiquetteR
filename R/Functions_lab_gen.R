@@ -276,7 +276,6 @@ print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = "N",
 #' # Example usage:
 #' # print_bottom("output.tex")
 #'
-#' @export
 print_bottom <- function(file_out){
 	# write bottom of the latex file
 	cat(paste0("
@@ -319,7 +318,7 @@ print_bottom <- function(file_out){
 #' @examples
 #' # Example usage:
 #' # create_pdf("output.tex", ind_list, print_info, lab_width = 15, lab_height = 9, font_size = 4, n_col = 8, col_N_name = "N", hl_col = "orange")
-#'
+#' @export
 
 create_pdf <- function(file_out, ind_list, print_info,lab_width = 15, lab_height = 9, font_size = 4, n_col = 8, col_N_name = "N", hl_col = "orange"){
 	# Step 1: Write the LaTeX document
