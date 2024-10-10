@@ -46,7 +46,10 @@ v_sex_to_latex <- Vectorize(sex_to_latex)
 #' and http://the-praise-of-insects.blogspot.com/2010/03/latex-insect-labels.html).
 #'
 #' @param file_out A character string specifying the name of the output file to write the LaTeX header to.
-#' @param lab_size An integer specifying the size (in mm) for the label environment (default is 15 mm).
+#' @param lab_width An integer specifying the width (in mm) for the labels (default is 15 mm).
+#' @param lab_height An integer specifying the height (in mm) for the labels (default is 9).
+#' @param font_size A real (one digit) specifying the size of the font for the label (default is 4)
+
 #' @param n_col An integer specifying the number of columns in the LaTeX document (default is 8 columns).
 #'
 #' @details
@@ -55,11 +58,11 @@ v_sex_to_latex <- Vectorize(sex_to_latex)
 #' 
 #' @examples
 #' \dontrun{
-#' print_header("output.tex", lab_size = 20, n_col = 6)
+#' print_header("output.tex", lab_width = 20,lab_height = 10, font_size = 5, n_col = 7)
 #' }
 #'
 #' 
-print_header <- function(file_out, lab_width = 15,lab_heigth = 9, n_col = 8){
+print_header <- function(file_out, lab_width = 15,lab_height = 9, font_size = 4, n_col = 8){
 	# create an empty Latex output file
 	file.create(file_out)
 	
@@ -143,9 +146,9 @@ print_header <- function(file_out, lab_width = 15,lab_heigth = 9, n_col = 8){
 \\endgraf\\repeat}
 
 
-% box_lab creates an environment for each label that is a parbox with width and heigth as parameters
+% box_lab creates an environment for each label that is a parbox with width and height as parameters
 \\NewEnviron{boxlab}{%
-  \\fbox{\\parbox[t][",lab_heigth,"mm][t]{",lab_width,"mm}{%
+  \\fbox{\\parbox[t][",lab_height,"mm][t]{",lab_width,"mm}{%
     \\raggedright
       \\BODY
     %
@@ -295,7 +298,9 @@ print_bottom <- function(file_out){
 #' for one label to be printed in the LaTeX document.
 #' @param print_info A data frame specifying the parameters for printing, including field names, 
 #' formatting options, and what data to print.
-#' @param lab_size An integer specifying the size (in mm) for the label (default is 15 mm).
+#' @param lab_width An integer specifying the width (in mm) for the labels (default is 15 mm).
+#' @param lab_height An integer specifying the height (in mm) for the labels (default is 9).
+#' @param font_size A real (one digit) specifying the size of the font for the label (default is 4)
 #' @param n_col An integer specifying the number of label columns in the LaTeX document (default is 8 columns).
 #' @param col_N_name A character string specifying the column name to be used for labels duplication (default is "N").
 #' @param hl_col A character string specifying the highlight color for specific elements (default is "orange").
@@ -317,9 +322,9 @@ print_bottom <- function(file_out){
 #'
 #' @export
 
-create_pdf <- function(file_out, ind_list, print_info,lab_width = 15, lab_heigth = 9, n_col = 8, col_N_name = "N", hl_col = "orange"){
+create_pdf <- function(file_out, ind_list, print_info,lab_width = 15, lab_height = 9, font_size = 4, n_col = 8, col_N_name = "N", hl_col = "orange"){
 	# Step 1: Write the LaTeX document
-	print_header(file_out = file_out, lab_width, lab_heigth, n_col)
+	print_header(file_out = file_out, lab_width, lab_height, font_size, n_col)
 	
 	# Step 2: Generate labels for each individual in the list
 	for (num in 1:nrow(ind_list)) {
