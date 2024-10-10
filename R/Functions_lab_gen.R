@@ -120,8 +120,8 @@ print_header <- function(file_out, lab_width = 15,lab_height = 9, font_size = 4,
 %Set lengths and other options
 
 \\setlength{\\parindent}{0pt} % retrait
-\\setlength{\\parskip}{0ex} % espacement vertical entre deux paragraphe (effet d'un //)
-\\linespread{0.3} % espacement entre les lignes d'un même paragrap
+%\\setlength{\\parskip}{0ex} % espacement vertical entre deux paragraphe (effet d'un //)
+\\linespread{0.4} % espacement entre les lignes d'un même paragrap
 \\setlength{\\fboxsep}{1pt} % espacement entre la box de l'étiquette et la bordure
 
 \\pagestyle{empty}
