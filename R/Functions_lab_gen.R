@@ -153,7 +153,13 @@ print_header <- function(file_out, lab_width = 15,lab_height = 9, font_size = 4,
       \\BODY
     %
    }}}
-
+\\NewEnviron{hidebox}{%
+  \\fcolorbox{white}{white}{\\parbox[t][",lab_height,"mm][t]{",lab_width,"mm}{%
+    \\color{white}  %
+    \\raggedright
+      \\BODY
+    %
+   }}}
 %-------------------------------------------------------------------------------
 
 \\begin{document}
@@ -329,7 +335,30 @@ create_pdf <- function(file_out, ind_list, print_info,lab_width = 15, lab_height
 		print_line(file_out = file_out, ind_list = ind_list, print_info = print_info, line_n = num, col_N_name = "N", hl_col = "orange")
 	}
 	
-	# Step 3: Append the footer to the LaTeX document
+  # Step 3
+  n_lab <- max(print_info$label_no,na.rm = TRUE)
+  N_hide <- round(285/lab_height/n_lab-1)
+  # add code to the Latex file
+  cat(paste0("
+	\\begin{speclabel}[",N_hide,"]"
+  ), 
+  file = file_out, append = TRUE)
+  
+  for (nlab in 1:n_lab){
+    cat(paste0("
+			 \\begin{hidebox}
+			 \\end{hidebox}
+							 "
+    ), 
+    file = file_out, append = TRUE)
+  }
+  
+  cat(paste0("
+			 \\end{speclabel}"
+  ), 
+  file = file_out, append = TRUE)
+
+	# Step 4: Append the footer to the LaTeX document
 	print_bottom(file_out = file_out)
 	
 	# Step 4: Compile the LaTeX document into a PDF using pdflatex
