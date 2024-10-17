@@ -2,10 +2,6 @@ bibentry(
   bibtype  = "Misc",
   title    = "EtiquetteR: an R package for designing and labeling insects",
   author   = "Nicolas Moiroux and Nil Rahola",
-  journal  = ,
   year     = "2024",
-  volume   = ,
-  number   = ,
-  pages    = ,
   doi      = "doi:"
 )
