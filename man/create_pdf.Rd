@@ -44,8 +44,10 @@ to the specified location. It does not return any value in R.
 }
 \description{
 This function generates a LaTeX document by sequentially adding a header, printing
-labels for each line of data, appending a footer, and then compiling the LaTeX code
+labels for each raw of a data table, appending a footer, and then compiling the LaTeX code
 into a PDF document.
+The LaTeX code is adapted from work by Samuel Brown (see https://github.com/sdjbrown/publicFiles/blob/master/labels.tex
+and http://the-praise-of-insects.blogspot.com/2010/03/latex-insect-labels.html).
 }
 \details{
 This function first calls \code{print_header} to write the beginning of the LaTeX

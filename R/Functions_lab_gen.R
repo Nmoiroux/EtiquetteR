@@ -183,7 +183,7 @@ print_header <- function(file_out, lab_width = 15,lab_height = 9, font_size = 4,
 #' @param ind_list A data frame containing the data for individuals. Each row corresponds to a specific individual.
 #' @param print_info A data frame specifying the printing parameters, including which fields to print, formatting options, and field names.
 #' @param line_n An integer indicating the row number in \code{ind_list} for which the labels should be created.
-#' @param col_N_name A character string specifying the name of the column in  \code{ind_list} that indicates the number of individuals per row
+#' @param col_N_name A character string specifying the name of the column in  \code{ind_list} that indicates the number of individuals per row. Default is NULL indicating 1 row per individual (and no replication of the labels)
 #' @param hl_col A character string specifying the color to be used for text highlighting
 #'
 #' @details The function retrieves data from a specified row in \code{ind_list} and matches it with the corresponding print parameters
@@ -204,7 +204,7 @@ print_header <- function(file_out, lab_width = 15,lab_height = 9, font_size = 4,
 #' 
 #### create labels per each line of the table
 
-print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = "N", hl_col = "orange"){
+print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = NULL, hl_col = "orange"){
 
 	v_ind <- ind_list[line_n,] %>% as.vector() %>% unlist() # retrieve data on the specified row number
 	
@@ -212,12 +212,17 @@ print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = "N",
 	
 	ifelse(identical(names(v_ind), print_info$field_name), # verify that var. names correspond between data table and print parameters table
 				 print_info$data <- unname(v_ind),
-				 print("Field names do not correspond or are not in the same order")
+				 print("Field names do not correspond")
 	)
 	
 	N_labels <- max(print_info$label_no, na.rm = TRUE) # number of labels to print (per individuals)
-	N_val <- v_ind[col_N_name] %>% as.integer()
-	N_individuals <- ifelse(is.na(N_val), 1, N_val) # retrieve the number of individuals that fit information in this row (to be used to duplicate labels)
+	
+	if (is.null(col_N_name)){
+	  N_individuals <- 1
+	} else {
+	  N_val <- v_ind[col_N_name] %>% as.integer()
+	  N_individuals <- ifelse(is.na(N_val), 0, N_val) # retrieve the number of individuals that fit information in this row (to be used to duplicate labels)
+	}
 	
 	
 	print_info <- print_info %>% # latex code for each information is prepared according to user-defined print parameters
