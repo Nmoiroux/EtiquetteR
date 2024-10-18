@@ -217,7 +217,7 @@ print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = "N",
 	
 	N_labels <- max(print_info$label_no, na.rm = TRUE) # number of labels to print (per individuals)
 	N_val <- v_ind[col_N_name] %>% as.integer()
-	N_individuals <- ifelse(is.na(N_val), 0, N_val) # retrieve the number of individuals that fit information in this row (to be used to duplicate labels)
+	N_individuals <- ifelse(is.na(N_val), 1, N_val) # retrieve the number of individuals that fit information in this row (to be used to duplicate labels)
 	
 	
 	print_info <- print_info %>% # latex code for each information is prepared according to user-defined print parameters
@@ -294,8 +294,10 @@ print_bottom <- function(file_out){
 #'
 #' @description
 #' This function generates a LaTeX document by sequentially adding a header, printing 
-#' labels for each line of data, appending a footer, and then compiling the LaTeX code 
+#' labels for each raw of a data table, appending a footer, and then compiling the LaTeX code 
 #' into a PDF document.
+#' The LaTeX code is adapted from work by Samuel Brown (see https://github.com/sdjbrown/publicFiles/blob/master/labels.tex 
+#' and http://the-praise-of-insects.blogspot.com/2010/03/latex-insect-labels.html).
 #'
 #' @param file_out A character string specifying the path to the LaTeX file that will be generated 
 #' and compiled into a PDF.
