@@ -183,7 +183,7 @@ print_header <- function(file_out, lab_width = 15,lab_height = 9, font_size = 4,
 #' @param ind_list A data frame containing the data for individuals. Each row corresponds to a specific individual.
 #' @param print_info A data frame specifying the printing parameters, including which fields to print, formatting options, and field names.
 #' @param line_n An integer indicating the row number in \code{ind_list} for which the labels should be created.
-#' @param col_N_name A character string specifying the name of the column in  \code{ind_list} that indicates the number of individuals per row. Default is NULL indicating 1 row per individual (and no replication of the labels)
+#' @param col_N_name A character string specifying the name of the column in  \code{ind_list} that indicates the number of individuals per row. Default is NA indicating 1 row per individual (and no replication of the labels)
 #' @param hl_col A character string specifying the color to be used for text highlighting
 #'
 #' @details The function retrieves data from a specified row in \code{ind_list} and matches it with the corresponding print parameters
@@ -204,7 +204,7 @@ print_header <- function(file_out, lab_width = 15,lab_height = 9, font_size = 4,
 #' 
 #### create labels per each line of the table
 
-print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = NULL, hl_col = "orange"){
+print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = NA, hl_col = "orange"){
   
 	v_ind <- ind_list[line_n,] %>% as.vector() %>% unlist() # retrieve data on the specified row number
 	
@@ -217,7 +217,7 @@ print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = NULL
 	
 	N_labels <- max(print_info$label_no, na.rm = TRUE) # number of labels to print (per individuals)
 	
-	if (is.null(col_N_name)){
+	if (is.na(col_N_name)){
 	  N_individuals <- 1
 	} else {
 	  N_val <- v_ind[col_N_name] %>% as.integer()
@@ -314,7 +314,7 @@ print_bottom <- function(file_out){
 #' @param lab_height An integer specifying the height (in mm) for the labels (default is 9).
 #' @param font_size A real (one digit) specifying the size of the font for the label (default is 4)
 #' @param n_col An integer specifying the number of label columns in the LaTeX document (default is 8 columns).
-#' @param col_N_name A character string specifying the column name to be used for labels duplication (default is "N").
+#' @param col_N_name A character string specifying the column name to be used for labels duplication (default is NA).
 #' @param hl_col A character string specifying the highlight color for specific elements (default is "orange").
 #'
 #' @details 
@@ -333,7 +333,7 @@ print_bottom <- function(file_out){
 #' # create_pdf("output.tex", ind_list, print_info, lab_width = 15, lab_height = 9, font_size = 4, n_col = 8, col_N_name = "N", hl_col = "orange")
 #' @export
 
-create_pdf <- function(file_out, ind_list, print_info,lab_width = 15, lab_height = 9, font_size = 4, n_col = 8, col_N_name = NULL, hl_col = "orange"){
+create_pdf <- function(file_out, ind_list, print_info,lab_width = 15, lab_height = 9, font_size = 4, n_col = 8, col_N_name = NA, hl_col = "orange"){
 	# Step 1: Write the LaTeX document
 	print_header(file_out = file_out, lab_width, lab_height, font_size, n_col)
 	
