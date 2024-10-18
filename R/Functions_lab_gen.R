@@ -205,7 +205,7 @@ print_header <- function(file_out, lab_width = 15,lab_height = 9, font_size = 4,
 #### create labels per each line of the table
 
 print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = NULL, hl_col = "orange"){
-
+  
 	v_ind <- ind_list[line_n,] %>% as.vector() %>% unlist() # retrieve data on the specified row number
 	
 	print_info <- print_info %>% dplyr::arrange(factor(field_name, levels = names(v_ind)))
@@ -333,13 +333,13 @@ print_bottom <- function(file_out){
 #' # create_pdf("output.tex", ind_list, print_info, lab_width = 15, lab_height = 9, font_size = 4, n_col = 8, col_N_name = "N", hl_col = "orange")
 #' @export
 
-create_pdf <- function(file_out, ind_list, print_info,lab_width = 15, lab_height = 9, font_size = 4, n_col = 8, col_N_name = "N", hl_col = "orange"){
+create_pdf <- function(file_out, ind_list, print_info,lab_width = 15, lab_height = 9, font_size = 4, n_col = 8, col_N_name = NULL, hl_col = "orange"){
 	# Step 1: Write the LaTeX document
 	print_header(file_out = file_out, lab_width, lab_height, font_size, n_col)
 	
 	# Step 2: Generate labels for each individual in the list
 	for (num in 1:nrow(ind_list)) {
-		print_line(file_out = file_out, ind_list = ind_list, print_info = print_info, line_n = num, col_N_name = "N", hl_col = "orange")
+		print_line(file_out = file_out, ind_list = ind_list, print_info = print_info, line_n = num, col_N_name = col_N_name, hl_col = hl_col)
 	}
 	
   # Step 3
