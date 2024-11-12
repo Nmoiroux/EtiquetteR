@@ -1,0 +1,80 @@
+---
+title: "User Guide: Generate Labels for Pinning Insects Using Shiny App"
+output: html_document
+---
+
+## User Guide: Generate Labels for Pinning Insects Using Shiny App
+
+This guide will help you use the app to generate insect pinning labels based on your data table and configure the label printing parameters. 
+
+### Introduction about needed data
+You will need a 'data table' that contains insect data to print (ideally one raw per individual and their descriptive informations in columns, names of columns are free). 'Data table' should be stored in a `.csv` (tab-delimited), `.xlsx` or `.ods` file. The second needed file is a 'table of printing parameters' that can be edited offline (in that case, it should respect the structure described in part 2 below and be stored either in a distinct sheet of the file containing the 'data table' or in a `.csv` (tab-delimited)) or online (from an empty table or an uploaded one).
+
+### 1. Upload Your Data Table
+
+Supported file formats: `.csv` (tab-delimited), `.xlsx`, `.ods`
+
+1. Click on the 'Browse' button and upload the file containing your insect data. For test purposes or to see examples of data, you can use example dataset from the ETiquetteR package (which also contains examples of printing parameter tables, see step 2 below) available here: [ETiquetteR example data](https://github.com/Nmoiroux/EtiquetteR/blob/main/inst/extdata/). These example data are available in all supported file formats.
+2. If your dataset is an `.ods` or `.xlsx` file, select the appropriate sheet from the drop-down menu. Your data should then be displayed in the 'Data table' tab. If using the example data suggested above, choose the sheet named 'Table_data'.
+
+### 2. Configure the Printing Parameters Table
+
+The printing parameters table defines how the information in your data table will be displayed on the labels. You can either upload a pre-configured table (stored as a sheet in the uploaded ods or xlsx file, or as a csv file) that can be edited, or fill out the table manually (select 'manually fill out' in the drop-down menu, this will generate a parameters table with the correct structure). Your data should be displayed in the 'Print parameters table' tab. In case of manual edition of printing parameters, click the 'save' buttons before PDF generation. All of the fields below are required in the table for the correct working of labels generation.
+After edition (and saving) of printing parameters, you can export your customised table of parameters for further re-use by clicking the 'csv' button.
+Below is a breakdown of each column in the table, along with how to configure them:
+
+**Note:** For columns with 0/1 options, any value different from '1' (including 0, NA, or an empty cell) will have the same effect as '0'.
+
+| Field Name          |     Type       | Description                                                                                                                  |
+|---------------------|:-------------:|------------------------------------------------------------------------------------------------------------------------------|
+| field_name          | Text        | This should match the names of the column in your dataset.                                                                   |
+| print               | 0/1         | Indicates whether this field should be printed on the label (1 = YES).                                                       |
+| label_no            | Number (1-4)| Fields can be printed on several thematic labels (e.g., date-location, ID...). Specify on which label (1 to 4) the field will be printed. You can print on up to 4 different labels. |
+| order_lab           | Number      | Set the order in which this field will appear on the label (1 = first position, 2 = second position...).                    |
+| print_field_name    | 0/1         | Indicates whether you want to print an abbreviation or short name for this field (e.g., 'Loc.' for Location) (1 = YES).      |
+| field_name_to_print | Text        | If you want to print an abbreviation, enter it here. Some characters (e.g., '_') may fail to be printed correctly.          |
+| print_opt_it        | 0/1         | Indicates whether the text should be printed in italics (e.g., for genera and species names) (1 = YES).                     |
+| print_opt_par       | 0/1         | Indicates whether the data should be printed inside parentheses (e.g., for subgenera names) (1 = YES).                      |
+| line_break          | 0/1         | Indicates whether a line break should follow the data when printed (1 = YES). If the field is in the last position on a label, this will add a blank line below. |
+| print_opt_hl        | 0/1         | Indicates whether the text should be color-highlighted (1 = YES).                                                           |
+| print_sex_symbol    | 0/1         | Indicates whether sex data should be printed as symbols (♂/♀) (1 = YES). Requires that sex data begin with either 'f' or 'm' letters (not case-sensitive; for female and male, respectively). Only applicable for the sex field. |
+
+
+### 3. Adjust Label Layout and Appearance
+
+You can customize the size and appearance of the labels:
+
+- **Label Width (mm):** Default is 15 mm.
+- **Label Height (mm):** Default is 8 mm.
+- **Font Size:** Default is 5.
+- **Number of Columns:** Number of labels per row. Default is 8.
+- **Highlight Color:** Set a color for highlighted fields (Default is 'orange', this should be an color name recognized by the R software).
+
+### 4. Generate the PDF
+
+Once your data and parameters are configured:
+
+1. Select the column for replication if you want multiple labels per entry.
+2. Click 'Download PDF' to generate and download the label sheet in .pdf format.
+
+### 5. Example Workflow
+
+1. Download from github the [ETiquetteR example dataset](https://github.com/Nmoiroux/EtiquetteR/blob/main/inst/extdata/liste_ind_coll_ex.ods) file in the `.ods` format on your computer.
+2. Click on the 'Browse' button and upload the dataset.
+3. In the 'Select data sheet' drop-down menu, select the sheet named 'Table_data'
+4. In the 'Select printing parameters source' drop-down menu, select the sheet named 'Print_parameters_ex1'
+5. Adjust label size, font, columns number, and highlight settings.
+6. You can select field 'N' in the 'Select column for number of label replication' drop-down menu if you want replication of labels according to this field.
+7. Click on the 'Download PDF' button to generate and download the PDF with the insect pinning labels.
+8. Customise the printing parameters table (click the 'save' buttons when done) and/or size parameters.
+9. Click on the 'Download PDF' button to generate and download the new version. Compare with the one generated in 7.
+
+### 6. Troubleshooting
+
+Ensure your dataset and parameters follow the specified structure. The parameters table should have one line per column of the data table and all the columns described in part 2 of the present guide. 
+
+If the PDF generation fails, check for special characters in the field names that may cause LaTeX issues. Check the structure of the parameter table (required rows and columns).
+
+If sex data are coded 'F'/'M' and the dataset only contains 'F's, this could be interpreted as 'FALSE' by R; consider recoding the variable.
+
+Avoid using the degree symbol (°) e.g., for spatial coordinates, as this may lead to printing issues. To include it, replace the degree symbol in the data table with `\\smalldegree`.
