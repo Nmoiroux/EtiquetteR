@@ -210,6 +210,10 @@ print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = NA, 
 	
 	print_info <- print_info %>% dplyr::arrange(factor(field_name, levels = names(v_ind)))
 	
+	if ("field_name_to_print" %in% colnames(print_info)){
+	  colnames(print_info)[which(colnames(print_info)=="field_name_to_print")] <- "prefix"
+	}
+	
 	ifelse(identical(names(v_ind), print_info$field_name), # verify that var. names correspond between data table and print parameters table
 				 print_info$data <- unname(v_ind),
 				 print("Field names do not correspond")
@@ -232,9 +236,10 @@ print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = NA, 
 		dplyr::mutate(print_txt = dplyr::if_else(print_opt_it == 1, stringr::str_c("{\\scinm ", print_txt, "}"), print_txt, print_txt)) %>% # add latex code for italic
 		dplyr::mutate(print_txt = dplyr::if_else(print_opt_par == 1, stringr::str_c("(", print_txt, ")"), print_txt, print_txt)) %>% # add brackets
 		dplyr::mutate(print_txt = dplyr::if_else(print_opt_hl == 1, stringr::str_c("\\begingroup\\fboxsep=0pt\\colorbox{",hl_col,"}{",print_txt,"}\\endgroup"), print_txt, print_txt)) %>% 
-		dplyr::mutate(field_name_to_print = dplyr::if_else(print_field_name == 1 & is.na(field_name_to_print), field_name, field_name_to_print)) %>% # define field name to print before information, if specified
-		dplyr::mutate(print_txt = purrr::pmap_chr(list(print_txt, print_field_name,field_name_to_print), function(x,y,z) dplyr::if_else(y == 1, 
-																																																							 stringr::str_c(z," ", x), x, x))) %>%# add a field name before information to print, if specified
+	  dplyr::mutate(print_txt = dplyr::if_else(is.na(prefix) | is.null(prefix) | prefix == "", print_txt, stringr::str_c(prefix," ", print_txt))) %>%
+		#dplyr::mutate(field_name_to_print = dplyr::if_else(print_field_name == 1 & is.na(field_name_to_print), field_name, field_name_to_print)) %>% # define field name to print before information, if specified
+		#dplyr::mutate(print_txt = purrr::pmap_chr(list(print_txt, print_field_name,field_name_to_print), function(x,y,z) dplyr::if_else(y == 1, 
+		#																																																					 stringr::str_c(z," ", x), x, x))) %>%# add a field name before information to print, if specified
 		dplyr::mutate(print_txt = dplyr::if_else(line_break == 1, stringr::str_c(print_txt, "\\","\\"), print_txt, print_txt)) # add latex code for break line
 	
 	# concatenate Latex code / Info to print for each individual label
