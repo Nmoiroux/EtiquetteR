@@ -9,7 +9,7 @@ library(DT) # display tables
 library(editbl)
 library(shinyjs) 
 
-# hack the editbl package to render table with trash buttons enabled
+# hack the editbl package to render table with trash buttons masked
 mybuttonsHTML <- "<div class=\"btn-group\">\n   <button id=\"%2$sedit_row_%1$s\" type=\"button\" class=\"btn btn-default action-button\" style=\"background-color: white\" onclick=\"get_id(this.id, &#39;%2$s&#39;);&#10;                          Shiny.setInputValue(&quot;%2$sedit&quot;, Math.random(), {priority: &quot;event&quot;});\">\n    <i class=\"far fa-pen-to-square\" role=\"presentation\" aria-label=\"pen-to-square icon\"></i>\n    \n  </button>\n</div>"
 # above is the - modified - output of the hidden function 'createButtonsHTML'
 # below is the modified fun 'createButtons' in order to render the modified html code
@@ -54,7 +54,7 @@ ui <- fluidPage(
       numericInput("lab_width", "Label width (mm)", value = 15, min = 1, width = '50%', step = 1),
       numericInput("lab_height", "Label height (mm)", value = 8, min = 1, width = '50%', step = 1),
       numericInput("font_size", "Font size", value = 5, min = 1, width = '50%', step = 0.5),
-      numericInput("N_col", "Number of columns per page", value = 8, min = 1, width = '50%'),
+      numericInput("N_col", "Number of columns per page", value = 8, min = 1, width = '50%', step = 1),
       textInput("hl_col", "Highlighting color", value = "orange"), # color used for highlighting
       uiOutput("field_N_selector"),  # Dynamic UI for selecting column indicating no of replication
       downloadButton("download_pdf", "Download PDF"), # download button
