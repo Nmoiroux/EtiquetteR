@@ -307,7 +307,6 @@ server <- function(input, output, session) {
   })
   # # Load the print_parameter table or template from EtiquetteR package
   print_informations <- reactive({
-    
     col_name <- colnames(individuals())
     print_params <- NULL
     req(input$file1)
@@ -358,7 +357,7 @@ server <- function(input, output, session) {
   observeEvent(print_informations(),{
     req(print_informations()) # verify that the reactive function has a result
     print_par$df <- print_informations()
-    modifiedData <- eDT(id = 'print_info', data = print_informations(),
+    modifiedData <- eDT(id = 'print_info', data = print_par$df,
                         options = list(dom = "Bfrtlip", keys = TRUE, ordering = FALSE,
                                        autoFill = list(update = FALSE, focus = "focus"),
                                        buttons = list("undo", "redo", "save", 
@@ -380,12 +379,10 @@ server <- function(input, output, session) {
   })
   
   #if Printing parameter table is edited
-  observeEvent(input$print_info_cell_edit, {
-    #print_par$df <<- editData(print_par$df, input$print_info_cell_edit, "print_info")
-    print_par$df[input$print_info_cell_edit$row,input$print_info_cell_edit$col] <<- input$print_info_cell_edit$value
+  observeEvent(input[["print_info-DT_cell_edit"]], {
+     print_par$df <<- editData(print_par$df, input[["print_info-DT_cell_edit"]])
   })
-  
-  
+
   
   # Observe the button click and generate the PDF
   output$download_pdf <- downloadHandler(
