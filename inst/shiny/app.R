@@ -1,13 +1,13 @@
 # Install/load necessary libraries
 library(shiny)
-library(markdown)
+library(markdown) # display user guide
 library(readr) # reading csv file
 library(readxl) # reading xlsx files
 library(readODS) # For handling .ods files
 library(EtiquetteR) # Generate latex then pdf file
-library(DT) # display tables
-library(editbl)
-library(shinyjs) 
+library(DT) # display table
+library(editbl) # diplay editable table
+library(shinyjs) # ?? 
 
 # hack the editbl package to render table with trash buttons masked
 mybuttonsHTML <- "<div class=\"btn-group\">\n   <button id=\"%2$sedit_row_%1$s\" type=\"button\" class=\"btn btn-default action-button\" style=\"background-color: white\" onclick=\"get_id(this.id, &#39;%2$s&#39;);&#10;                          Shiny.setInputValue(&quot;%2$sedit&quot;, Math.random(), {priority: &quot;event&quot;});\">\n    <i class=\"far fa-pen-to-square\" role=\"presentation\" aria-label=\"pen-to-square icon\"></i>\n    \n  </button>\n</div>"
@@ -357,14 +357,14 @@ server <- function(input, output, session) {
   observeEvent(print_informations(),{
     req(print_informations()) # verify that the reactive function has a result
     print_par$df <- print_informations()
-    modifiedData <- eDT(id = 'print_info', data = print_par$df,
-                        options = list(dom = "Bfrtlip", keys = TRUE, ordering = FALSE,
+    modifiedData <- eDT(id = 'print_info', data = print_informations(),
+                        options = list(dom = "Bfrtlip", keys = TRUE, ordering = TRUE,
                                        autoFill = list(update = FALSE, focus = "focus"),
                                        buttons = list("undo", "redo", "save", 
                                                       list(
                                                         extend = "csv",
                                                         exportOptions = list(
-                                                          columns = "1,2,3,4,5,6,7,8,9,10,11"
+                                                          columns = "1,2,3,4,5,6,7,8,9,10"
                                                         ),
                                                         fieldSeparator = "\t",
                                                         title = "InsectLabelR_print_parameters"
