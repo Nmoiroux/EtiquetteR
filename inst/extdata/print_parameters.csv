@@ -1,14 +1,14 @@
-"field_name"	"print"	"label_no"	"order_lab"	"print_field_name"	"field_name_to_print"	"print_opt_it"	"print_opt_par"	"line_break"	"print_opt_hl"	"print_sex_symbol"
-"rec_date"	"1"	"2"	"1"	""	""	""	""	"1"	""	""
-"rec_place"	"1"	"2"	"2"	""	""	""	""	"1"	""	""
-"rec_cntry"	"1"	"2"	"3"	""	""	""	""	""	""	""
-"Y"	"0"	""	""	""	""	""	""	""	""	""
-"X"	"0"	""	""	""	""	""	""	""	""	""
-"rec_name"	"1"	"3"	"1"	"1"	"leg."	""	""	"1"	""	""
-"id_name"	"1"	"3"	"2"	"1"	"det."	""	""	"1"	""	""
-"sex"	"1"	"1"	"4"	""	""	""	""	""	""	"1"
-"genus"	"1"	"1"	"1"	""	""	"1"	""	""	""	""
-"subgenus"	"1"	"1"	"2"	""	""	"1"	"1"	""	""	""
-"species"	"1"	"1"	"3"	""	""	"1"	""	"1"	""	""
-"N"	"0"	""	""	""	""	""	""	""	""	""
-"id"	"1"	"3"	"3"	"1"	"no."	""	""	""	"1"	""
+field_name	print	label_no	order_lab	prefix	print_opt_it	print_opt_par	line_break	print_opt_hl	print_sex_symbol
+rec_date	1	2	1				1		
+rec_place	1	2	2				1		
+rec_cntry	1	2	3						
+Y	0								
+X	0								
+rec_name	1	3	1	leg.			1		
+id_name	1	3	2	det.			1		
+sex	1	1	4						1
+genus	1	1	1		1				
+subgenus	1	1	2		1	1			
+species	1	1	3		1		1		
+N	0								
+id	1	3	3	no.				1	
