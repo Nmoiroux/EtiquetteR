@@ -1,0 +1,77 @@
+---
+title: "Guide d'utilisation : Générer des étiquettes pour l'épinglage d'insectes avec l'application Shiny"
+output: html_document
+---
+
+## Guide d'utilisation
+
+Ce guide vous aidera à utiliser l'application pour générer des étiquettes à partir de votre tableau de données et à configurer les paramètres d'impression des étiquettes.
+
+### Données nécessaires
+
+Vous aurez besoin d'un "tableau de données" contenant les informations à imprimer (idéalement une ligne par individu avec des informations descriptives en colonnes, les noms de colonnes sont libres). Le "tableau de données" doit être enregistré dans un fichier `.csv` (délimitaion: tabulations), `.xlsx` ou `.ods`. Le second fichier nécessaire est un "tableau des paramètres d'impression" qui peut être édité hors ligne (dans ce cas, il doit respecter la structure décrite dans la partie 2 ci-dessous et être enregistré soit dans une feuille distincte du fichier contenant le "tableau de données", soit dans un fichier `.csv` (délimitaion: tabulations)) ou en ligne (à partir d'un tableau vierge ou d'un tableau chargé par vos soins).
+
+### 1. Charger votre tableau de données
+
+Formats de fichiers supportés : `.csv` (délimitaion: tabulations), `.xlsx`, `.ods`
+
+1. Cliquez sur le bouton 'Browse' et chargez le fichier contenant les données sur les insectes. Pour des tests ou pour voir des exemples de données, vous pouvez utiliser les jeux de données exemples du package `R` ETiquetteR (qui contient aussi des exemples de tables de paramètres d'impression, voir l'étape 2 ci-dessous) disponibles ici : [Données exemples ETiquetteR](https://github.com/Nmoiroux/EtiquetteR/blob/main/inst/extdata/). Ces exemples sont disponibles dans tous les formats de fichiers supportés.
+2. Si votre ensemble de données est un fichier `.ods` ou `.xlsx`, sélectionnez la feuille appropriée dans le menu déroulant. Vos données devraient alors s'afficher dans l'onglet 'Data table'. Si vous utilisez les données d'exemple suggérées ci-dessus, choisissez la feuille nommée 'Table_data'.
+
+### 2. Configurer le tableau des paramètres d'impression
+
+Le tableau des paramètres d'impression définit comment les informations de votre tableau de données seront affichées sur les étiquettes. Vous pouvez soit charger un tableau préconfiguré (enregistré comme feuille dans le fichier ods ou xlsx chargé, ou comme fichier csv) qui peut être édité, soit remplir le tableau manuellement (sélectionnez 'mannually fill out' dans le menu déroulant, cela génèrera un tableau des paramètres correctement structuré). Vos données doivent s'afficher dans l'onglet 'Print parameters table'. En cas d'édition manuelle des paramètres d'impression, cliquez sur le bouton 'save' avant la génération du PDF. Tous les champs ci-dessous sont requis dans la table des paramètre pour le bon fonctionnement de la génération des étiquettes. Après édition (et sauvegarde) des paramètres d'impression, vous pouvez exporter votre table de paramètres personnalisé pour une réutilisation ultérieure en cliquant sur le bouton 'csv'. Voici une description de chaque colonne du tableau ainsi que des instructions pour les configurer :
+
+**Remarque :** Pour les colonnes avec des options 0/1, toute valeur différente de '1' (y compris 0, NA ou une cellule vide) aura le même effet que '0'.
+
+| Nom du champ | Type | Description |
+|---------------|:-------------:|-------------------------------------------|
+| field_name | Texte | Doit correspondre aux noms des colonnes de votre tableau des données à imprimer. |
+| print | 0/1 | Indique si ce champ doit être imprimé sur l'étiquette (1 = OUI, 0 = NON). |
+| label_no | Nombre (1-4) | Les champs peuvent être imprimés sur plusieurs étiquettes thématiques (par ex. date-lieu, identification, manipulateurs...). Spécifiez sur quelle étiquette (1 à 4) le champ sera imprimé. Vous pouvez imprimer sur jusqu'à 4 étiquettes thématiques différentes. |
+| order_lab | Nombre | Définissez l'ordre d'apparition de ce champ sur l'étiquette (1 = première position, 2 = deuxième position...). |
+| prefix | Texte | Si vous souhaitez imprimer une abréviation ou un préfixe devant les données (par ex. Loc. pour localisation), entrez-le ici. Certains caractères (par ex. '\_') peuvent ne pas s'imprimer correctement. |
+| print_opt_it | 0/1 | Indique si le texte doit être imprimé en italique (par ex. pour les noms de genres et d'espèces) (1 = OUI, 0 = NON). |
+| print_opt_par | 0/1 | Indique si les données doivent être imprimées entre parenthèses (par ex. pour les noms de sous-genres) (1 = OUI, 0 = NON). |
+| line_break | 0/1 | Indique si un saut de ligne doit suivre les données lorsqu'elles sont imprimées (1 = OUI, 0 = NON). Si le champ est en dernière position sur une étiquette, cela ajoutera une ligne vide en dessous. |
+| print_opt_hl | 0/1 | Indique si le texte doit être surligné en couleur (1 = OUI, 0 = NON). |
+| print_sex_symbol | 0/1 | Indique si les données sur le sexe doivent être imprimées sous forme de symboles (♂/♀) (1 = OUI, 0 = NON). Requiert que les données sur le sexe commencent par les lettres 'f' ou 'm' (insensible à la casse ; pour femelle et mâle, respectivement). Applicable uniquement au champ du sexe. |
+
+### 3. Ajuster la mise en page et l'apparence de l'étiquette
+
+Vous pouvez personnaliser la taille et l'apparence des étiquettes :
+
+-   **Label Width (mm):** Largeur de l'étiquette, par défaut 15 mm.
+-   **Label Height (mm):** Hauteur de l'étiquette, par défaut 8 mm.
+-   **Font Size:** Taille de police, par défaut 5.
+-   **Number of Columns:** Nombre d'étiquettes par ligne. Par défaut 8.
+-   **Highlight Color:** Couleur de surlignage, définissez une couleur pour les champs surlignés (par défaut 'orange', cela doit être un nom de couleur reconnu par `R`).
+
+### 4. Générer le PDF
+
+Une fois vos données et paramètres configurés :
+
+1. Si certaine lignes nécessitent d'être répliquées, l'information doit être indiquée dans une colonne du tableau de donnée et cette colonne selectionnées dans le manu déroulant 'Select column for number of label replication'. 
+2. Cliquez sur 'Download PDF' pour générer et télécharger la feuille d'étiquettes au format .pdf.
+
+### 5. Exemple de flux de travail
+
+1. Téléchargez depuis GitHub un [jeu de données exemples ETiquetteR](https://github.com/Nmoiroux/EtiquetteR/blob/main/inst/extdata/liste_ind_coll_ex.ods) au format `.ods` sur votre ordinateur.
+2. Cliquez sur le bouton 'Browse' et chargez le jeu de données.
+3. Dans le menu déroulant 'Select data sheet', choisissez la feuille nommée 'Table_data'.
+4. Dans le menu déroulant 'Select printing parameters source', sélectionnez la feuille nommée 'Print_parameters_ex1'.
+5. Ajustez la taille de l'étiquette, la police, le nombre de colonnes et la couleur de surlignage.
+6. Vous pouvez sélectionner le champ 'N' dans le menu déroulant 'Sélectionner la colonne pour le nombre de réplicas d'étiquettes' si vous souhaitez répliquer les étiquettes selon ce champ.
+7. Cliquez sur le bouton 'Télécharger PDF' pour générer et télécharger le PDF avec les étiquettes d'épinglage d'insectes.
+8. Personnalisez le tableau des paramètres d'impression (cliquez sur les boutons 'sauvegarder' après modification) et/ou les paramètres de taille.
+9. Cliquez sur le bouton 'Télécharger PDF' pour générer et télécharger la nouvelle version. Comparez-la avec celle générée à l'étape 7.
+
+### 6. Dépannage
+
+Assurez-vous que votre ensemble de données et vos paramètres respectent la structure spécifiée. Le tableau des paramètres doit comporter une ligne par colonne du tableau de données et toutes les colonnes décrites dans la partie 2 du présent guide.
+
+Si la génération du PDF échoue, vérifiez la présence de caractères spéciaux dans les noms de champs qui pourraient causer des problèmes avec LaTeX. Vérifiez la structure du tableau des paramètres (lignes et colonnes requises).
+
+Si les données sur le sexe sont codées 'F'/'M' et que l'ensemble de données ne contient que des 'F', cela pourrait être interprété comme 'FALSE' par R ; envisagez de recoder la variable (Fe/Ma).
+
+Évitez d'utiliser le symbole de degré (°) pour les coordonnées spatiales, car cela peut entraîner des problèmes d'impression. Néanmoins, si vous soulez vraiment l'inclure, un hack consiste à remplacez le symbole 'degré' dans le tableau de données par `\\smalldegree`.
