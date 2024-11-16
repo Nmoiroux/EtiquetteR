@@ -339,6 +339,14 @@ print_bottom <- function(file_out){
 #' @export
 
 create_pdf <- function(file_out, ind_list, print_info,lab_width = 15, lab_height = 9, font_size = 4, n_col = 8, col_N_name = NA, hl_col = "orange"){
+  
+  # function that check extension of file_out and change to .tex if it is .pdf
+  file_out_ext <- tools::file_ext(file_out)
+  ext_s <- nchar(file_out_ext)
+  if (file_out_ext == "pdf"){
+    file_out <- paste0(stringr::str_sub(file_out,1,-(ext_s+2)),".tex")
+  }
+  
 	# Step 1: Write the LaTeX document
 	print_header(file_out = file_out, lab_width, lab_height, font_size, n_col)
 	
