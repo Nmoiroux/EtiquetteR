@@ -37,7 +37,7 @@ empty_par <- function(var){
 }
 
 
-# Define UI for the app
+# Define UI for the app----
 ui <- fluidPage(
   titlePanel("Generate labels for your pinned insects"),
   
