@@ -3,7 +3,7 @@ title: "User Guide: Generate Labels for Pinning Insects Using Shiny App"
 output: html_document
 ---
 
-## User Guide: Generate Labels for Pinning Insects Using Shiny App
+## User Guide
 
 This guide will help you use the app to generate insect pinning labels based on your data table and configure the label printing parameters.
 
@@ -25,13 +25,12 @@ The printing parameters table defines how the information in your data table wil
 **Note:** For columns with 0/1 options, any value different from '1' (including 0, NA, or an empty cell) will have the same effect as '0'.
 
 | Field Name | Type | Description |
-|------------|:----------:|------------------------------------------------|
-| field_name | Text | This should match the names of the column in your dataset. |
+|---------------|:-------------:|-------------------------------------------|
+| field_name | Text | This should match the names of the column in the data table that contains the data to print. |
 | print | 0/1 | Indicates whether this field should be printed on the label (1 = YES). |
 | label_no | Number (1-4) | Fields can be printed on several thematic labels (e.g., date-location, ID...). Specify on which label (1 to 4) the field will be printed. You can print on up to 4 different labels. |
 | order_lab | Number | Set the order in which this field will appear on the label (1 = first position, 2 = second position...). |
-| print_field_name | 0/1 | Indicates whether you want to print an abbreviation or short name for this field (e.g., 'Loc.' for Location) (1 = YES). |
-| field_name_to_print | Text | If you want to print an abbreviation, enter it here. Some characters (e.g., '\_') may fail to be printed correctly. |
+| prefix | Text | If you want to print an abbreviation or prefix to be printed in front of the data (e.g. Loc. for location) , enter it here. Some characters (e.g., '\_') may fail to be printed correctly. |
 | print_opt_it | 0/1 | Indicates whether the text should be printed in italics (e.g., for genera and species names) (1 = YES). |
 | print_opt_par | 0/1 | Indicates whether the data should be printed inside parentheses (e.g., for subgenera names) (1 = YES). |
 | line_break | 0/1 | Indicates whether a line break should follow the data when printed (1 = YES). If the field is in the last position on a label, this will add a blank line below. |

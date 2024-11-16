@@ -67,126 +67,12 @@ ui <- fluidPage(
                   "User guide", 
                   value = "panel3",
                   includeMarkdown("user_guide.Rmd")
-        ), 
+                  ), 
         tabPanel(## tab user guide FR----
                  "Guide de l'utilisateur", 
                  value = "panel5",
-                 h3("Guide de l'utilisateur : Générer des étiquettes pour l'épinglage d'insectes à l'aide de l'application Shiny"),
-                 tags$p("Ce guide vous aidera à utiliser l'application pour générer des étiquettes d'insectes à épingler à partir de votre ensemble de données et à configurer les paramètres d'impression des étiquettes."),
-                 
-                 h4("1. Téléchargez votre ensemble de données"),
-                 tags$p("Formats de fichier pris en charge : .csv (séparateur tabulation), .xlsx, .ods"),
-                 tags$ol(
-                   tags$li("Cliquez sur le bouton 'Browse...' et téléchargez le fichier contenant vos données d'insectes. Si c'est pour un test, vous pouvez utiliser un ensemble de données du package ETiquetteR (qui contient également des exemples de tableaux de paramètres d'impression, voir l'étape 2 ci-dessous) disponible ici : https://github.com/Nmoiroux/EtiquetteR/blob/main/inst/extdata/liste_ind_coll_ex.ods"),
-                   tags$li("Si votre fichier contient plusieurs feuilles, sélectionnez la feuille appropriée dans le menu déroulant. Vos données doivent apparaître dans l'onglet 'Data Table'")
+                 includeMarkdown("user_guide_fr.Rmd")
                  ),
-                 
-                 h4("2. Configurez le tableau des paramètres d'impression ('Print parameters table')"),
-                 tags$p("Le tableau des paramètres d'impression définit la manière dont les informations de votre ensemble de données seront affichées sur les étiquettes. 
-                 Vous pouvez soit télécharger un tableau préconfiguré (stocké dans une feuille du fichier ods ou xlsx chargé ou dans un fichier csv) et le modifier éventuellement, soit remplir le tableau manuellement (selectionnez 'manually fill out' dans le menu déroulant). Voici un aperçu de chaque colonne du tableau et comment les configurer :"),
-                 tags$p(tags$strong("Remarque : "), "Pour les colonnes avec des options 0/1, toute valeur différente de '1' (y compris 0, NA ou une cellule vide) aura le même effet que '0'."),
-                 
-                 tags$table(
-                   class = "table",
-                   tags$thead(
-                     tags$tr(
-                       tags$th("Nom du champ"),
-                       tags$th("Type"),
-                       tags$th("Description")
-                     )
-                   ),
-                   tags$tbody(
-                     tags$tr(
-                       tags$td("Filed_name"), 
-                       tags$td("Texte"), 
-                       tags$td("Doit correspondre aux noms des colonnes de votre table de données.")
-                     ),
-                     tags$tr(
-                       tags$td("print"), 
-                       tags$td("0/1"), 
-                       tags$td("Indique si ce champ doit être imprimé sur l'étiquette (1 = OUI).")
-                     ),
-                     tags$tr(
-                       tags$td("label_no"), 
-                       tags$td("Nombre (1-4)"), 
-                       tags$td("Les champs peuvent être imprimés sur plusieurs étiquettes thématiques (par ex. date-lieu, ID...). Indiquez sur quelle étiquette (1 à 4) le champ sera imprimé. Vous pouvez imprimer jusqu'à 4 étiquettes différentes.")
-                     ),
-                     tags$tr(
-                       tags$td("order_lab"), 
-                       tags$td("Nombre"), 
-                       tags$td("Définissez l'ordre dans lequel ce champ apparaîtra sur l'étiquette (1 = première position, 2 = deuxième position...).")
-                     ),
-                     tags$tr(
-                       tags$td("print_field_name"), 
-                       tags$td("0/1"), 
-                       tags$td("Indique si vous souhaitez imprimer une abréviation ou un nom court pour ce champ (par ex., 'Loc.' pour Lieu) (1 = OUI).")
-                     ),
-                     tags$tr(
-                       tags$td("field_name_to_print"), 
-                       tags$td("Texte"), 
-                       tags$td("Si vous souhaitez imprimer une abréviation, saisissez-la ici. Certains caractères (par ex. '_') peuvent ne pas être imprimés correctement.")
-                     ),
-                     tags$tr(
-                       tags$td("print_opt_it"), 
-                       tags$td("0/1"), 
-                       tags$td("Indique si le texte doit être imprimé en italique (par ex. pour les noms de genres et d'espèces) (1 = OUI).")
-                     ),
-                     tags$tr(
-                       tags$td("print_opt_par"), 
-                       tags$td("0/1"), 
-                       tags$td("Indique si les données doivent être imprimées entre parenthèses (par ex. pour les noms de sous-genres) (1 = OUI).")
-                     ),
-                     tags$tr(
-                       tags$td("line_break"), 
-                       tags$td("0/1"), 
-                       tags$td("Indique si un saut de ligne doit suivre les données lorsqu'elles sont imprimées (1 = OUI). Si le champ est à la dernière position sur une étiquette, cela ajoutera une ligne vide en dessous.")
-                     ),
-                     tags$tr(
-                       tags$td("print_opt_hl"), 
-                       tags$td("0/1"), 
-                       tags$td("Indique si le texte doit être surligné (1 = OUI).")
-                     ),
-                     tags$tr(
-                       tags$td("print_sex_symbol"), 
-                       tags$td("0/1"), 
-                       tags$td("Indique si les données de sexe doivent être imprimées sous forme de symboles (♂/♀) (1 = OUI). Nécessite que les données de sexe commencent par les lettres 'f' ou 'm' (sans distinction de majuscules/minuscules; pour femelle et mâle, respectivement). Applicable uniquement pour le champ de sexe.")
-                     )
-                   )
-                 ),
-                 
-                 h4("3. Ajustez la disposition et l'apparence des étiquettes"),
-                 tags$p("Vous pouvez personnaliser la taille et l'apparence des étiquettes :"),
-                 tags$ul(
-                   tags$li("Label width (mm): Largeur de l'étiquette, par défaut 15 mm."),
-                   tags$li("Label height (mm): Hauteur de l'étiquette, par défaut 8 mm."),
-                   tags$li("Font size: Taille de police, par défaut 5."),
-                   tags$li("Number of column per page: Nombre d'étiquettes par ligne. Par défaut 8."),
-                   tags$li("Highlighting color: Couleur de surlignage, définissez une couleur pour les champs surlignés (par défaut 'orange', cela doit être un nom de couleur reconnu par R).")
-                 ),
-                 
-                 h4("4. Générez le PDF"),
-                 tags$p("Une fois vos données et paramètres configurés :"),
-                 tags$ol(
-                   tags$li("Sélectionnez la colonne pour la réplication si vous souhaitez plusieurs étiquettes par entrée."),
-                   tags$li("Cliquez sur 'Download PDF' pour générer et télécharger la feuille d'étiquettes au format .pdf.")
-                 ),
-                 
-                 h4("5. Exemple de flux de travail"),
-                 tags$ol(
-                   tags$li("Téléchargez votre ensemble de données (par ex., un fichier .csv avec des données de collection d'insectes)."),
-                   tags$li("Remplissez ou téléchargez le tableau des paramètres d'impression."),
-                   tags$li("Ajustez la taille des étiquettes, la police, les colonnes et les paramètres de surlignage."),
-                   tags$li("Générez et téléchargez le PDF avec les étiquettes pour le montage et l'épinglage des insectes.")
-                 ),
-                 
-                 h4("6. Dépannage"),
-                 tags$p("Assurez-vous que votre ensemble de données et vos paramètres respectent la structure spécifiée (en particulier, vérifier que la table des paramètre d'impression contient en ligne toutes les colonnes de la table de donnée et en colonne toutes les options listées dans la partie 2 de ce guide). 
-         Si la génération du PDF échoue, vérifiez la présence de caractères spéciaux dans les noms de champs susceptibles de provoquer des problèmes avec LaTeX. Vérifier la structure de la table des paramètres d'impression (lignes et colonnes).
-         Si les données de sexe sont codées 'F'/'M' et que l'ensemble de données ne contient que des 'F', cela pourrait être interprété comme 'FALSE' par R ; envisagez de recoder la variable. 
-         Évitez d'utiliser le symbole du degré (°) par ex. pour les coordonnées spatiales, cela pourrait entraîner des problèmes d'impression. Si vous souhaitez tout de même utiliser le symbole du degré, une solution consiste à remplacer le symbole du degré dans le tableau des données par '\\smalldegree'.")
-        ),
-        
-        
         tabPanel("Data table", dataTableOutput('datatable'), value = "panel1"), # Tab data table----
         tabPanel( # Tab printing parameters tables----
                   "Printing parameters table (editable)", dataTableOutput('print_info'), value = "panel2",
