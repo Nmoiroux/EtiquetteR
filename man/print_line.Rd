@@ -9,7 +9,7 @@ print_line(
   ind_list,
   print_info,
   line_n,
-  col_N_name = NULL,
+  col_N_name = NA,
   hl_col = "orange"
 )
 }
@@ -22,7 +22,7 @@ print_line(
 
 \item{line_n}{An integer indicating the row number in \code{ind_list} for which the labels should be created.}
 
-\item{col_N_name}{A character string specifying the name of the column in  \code{ind_list} that indicates the number of individuals per row. Default is NULL indicating 1 row per individual (and no replication of the labels)}
+\item{col_N_name}{A character string specifying the name of the column in  \code{ind_list} that indicates the number of individuals per row. Default is NA indicating 1 row per individual (and no replication of the labels)}
 
 \item{hl_col}{A character string specifying the color to be used for text highlighting}
 }

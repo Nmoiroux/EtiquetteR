@@ -12,7 +12,7 @@ create_pdf(
   lab_height = 9,
   font_size = 4,
   n_col = 8,
-  col_N_name = "N",
+  col_N_name = NA,
   hl_col = "orange"
 )
 }
@@ -34,7 +34,7 @@ formatting options, and what data to print.}
 
 \item{n_col}{An integer specifying the number of label columns in the LaTeX document (default is 8 columns).}
 
-\item{col_N_name}{A character string specifying the column name to be used for labels duplication (default is "N").}
+\item{col_N_name}{A character string specifying the column name to be used for labels duplication (default is NA).}
 
 \item{hl_col}{A character string specifying the highlight color for specific elements (default is "orange").}
 }
