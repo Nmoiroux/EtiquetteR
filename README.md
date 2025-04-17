@@ -1,4 +1,6 @@
 ## EtiquetteR: Generate Labels for Insect Pinning
+[![DOI](https://zenodo.org/badge/968181117.svg)](https://doi.org/10.5281/zenodo.15237614)
+
 
 ### Overview
 EtiquetteR is an R package designed to streamline the creation of high-quality labels for insect pinning. By taking a dataset as input, EtiquetteR generates printable labels in PDF format, helping researchers and entomologists maintain accurate and standardized specimen records.
