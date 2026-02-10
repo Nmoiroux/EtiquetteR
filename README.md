@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/887177944.svg)](https://doi.org/10.5281/zenodo.14987479)
+
 ## EtiquetteR: Generate Labels for Insect Pinning
 
 ### Overview
