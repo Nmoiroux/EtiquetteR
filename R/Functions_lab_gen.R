@@ -12,9 +12,9 @@
 #'
 #' @examples
 #' # Example usage:
-#' sex_to_latex("female") # Returns "\\smallfemale"
-#' sex_to_latex("male")   # Returns "\\smallmale"
-#' sex_to_latex(NA)       # Returns NA
+#' # sex_to_latex("female") # Returns "\\smallfemale"
+#' # sex_to_latex("male")   # Returns "\\smallmale"
+#' # sex_to_latex(NA)       # Returns NA
 #' 
 #' @importFrom stringr str_starts
 #'
@@ -34,7 +34,6 @@ sex_to_latex <- function(sex_data){
   }
   return(sex_return)
 }
-
 v_sex_to_latex <- Vectorize(sex_to_latex)
 
 #' @title Create LaTeX Header for Mosquito Labels Document
