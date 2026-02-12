@@ -122,4 +122,3 @@ The generated `example_labels.pdf` file will contain insect pinning labels forma
 - Avoid special characters in field names to prevent LaTeX rendering issues.
 
 ---
-# AttractiveITN
