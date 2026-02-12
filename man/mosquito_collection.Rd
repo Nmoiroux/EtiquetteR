@@ -25,9 +25,6 @@ A data frame with 24 rows and 12 variables:
 \source{
 Simulated dataset for demonstration purposes.
 }
-\usage{
-mosquito_collection
-}
 \description{
 A toy dataset representing mosquito specimens collected in southern France
 and intended for pinning and label printing with \code{create_pdf()}.
@@ -56,4 +53,3 @@ head(mosquito_collection)
 # )
 
 }
-\keyword{datasets}

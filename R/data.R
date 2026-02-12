@@ -47,7 +47,7 @@
 #'
 #' @name mosquito_collection
 #' @docType data
-"mosquito_collection"
+NULL
 
 
 #' Example print parameter table for label formatting
@@ -108,6 +108,6 @@
 #'
 #' @name print_parameters
 #' @docType data
-print_parameters
+NULL
 
 
