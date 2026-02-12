@@ -342,17 +342,17 @@ print_bottom <- function(file_out){
 #'
 #' @examples
 #' 
-#' create_pdf(
-#'   file_out = "output.pdf",         # Name of pdf file
-#'   ind_list = mosquito_collection , # Table of data
-#'   print_info = print_parameters,   # Table of printing parameter
-#'   lab_width = 15,                # Width of the labels in mm
-#'   lab_height = 9,                # Height of the labels in mm
-#'   font_size = 4,                 # Font size
-#'   n_col = 8,                     # Number of label per row on page
-#'   col_N_name = "N", # Column with Number of specimens sharing identical metadata.
-#'   hl_col = "orange"              # Color for highlighted text
-#'   )
+#' # create_pdf(
+#' #  file_out = "output.pdf",         # Name of pdf file
+#' #  ind_list = mosquito_collection , # Table of data
+#' #  print_info = print_parameters,   # Table of printing parameter
+#' #  lab_width = 15,                # Width of the labels in mm
+#' #  lab_height = 9,                # Height of the labels in mm
+#' #  font_size = 4,                 # Font size
+#' #  n_col = 8,                     # Number of label per row on page
+#' #  col_N_name = "N", # Column with Number of specimens sharing identical metadata.
+#' #  hl_col = "orange"              # Color for highlighted text
+#' #  )
 #'   
 #' @export
 
