@@ -341,16 +341,19 @@ print_bottom <- function(file_out){
 #' to the specified location. It does not return any value in R.
 #'
 #' @examples
-#' # Example usage:
-#' # create_pdf("output.tex", 
-#'   ind_list, 
-#'   print_info, 
-#'   lab_width = 15, 
-#'   lab_height = 9, 
-#'   font_size = 4, 
-#'   n_col = 8, 
-#'   col_N_name = "N", 
-#'   hl_col = "orange")
+#' 
+#' # create_pdf(
+#'   file_out = "/Labels/output_pdf.tex",         # Name of pdf file
+#'   ind_list = mosquito_collection , # Table of data
+#'   print_info = print_parameters,   # Table of printing parameter
+#'   lab_width = 15,                # Width of the labels in mm
+#'   lab_height = 9,                # Height of the labels in mm
+#'   font_size = 4,                 # Font size
+#'   n_col = 8,                     # Number of label per row on page
+#'   col_N_name = "N",              # Column in data_table specifying number of identical labels to print
+#'   hl_col = "orange"              # Color for highlighted text
+#'   )
+#'   
 #' @export
 
 create_pdf <- function(file_out, ind_list, print_info,lab_width = 15, lab_height = 9, font_size = 4, n_col = 8, col_N_name = NA, hl_col = "orange"){
