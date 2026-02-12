@@ -121,8 +121,8 @@ print_header <- function(file_out, lab_width = 15,lab_height = 9, font_size = 4,
 
 \\setlength{\\parindent}{0pt} % retrait
 %\\setlength{\\parskip}{0ex} % espacement vertical entre deux paragraphe (effet d'un //)
-\\linespread{0.4} % espacement entre les lignes d'un même paragrap
-\\setlength{\\fboxsep}{1pt} % espacement entre la box de l'étiquette et la bordure
+\\linespread{0.4} % espacement entre les lignes d'un meme paragraph
+\\setlength{\\fboxsep}{1pt} % espacement entre la box de l'etiquette et la bordure
 
 \\pagestyle{empty}
 
@@ -147,8 +147,14 @@ print_header <- function(file_out, lab_width = 15,lab_height = 9, font_size = 4,
 
 
 % box_lab creates an environment for each label that is a parbox with width and height as parameters
-\\NewEnviron{boxlab}{%
+\\NewEnviron{boxlabt}{%
   \\fbox{\\parbox[t][",lab_height,"mm][t]{",lab_width,"mm}{%
+    \\raggedright
+      \\BODY
+    %
+  }}}
+\\NewEnviron{boxlabc}{%
+  \\fbox{\\parbox[t][",lab_height,"mm][c]{",lab_width,"mm}{%
     \\raggedright
       \\BODY
     %
@@ -206,6 +212,8 @@ print_header <- function(file_out, lab_width = 15,lab_height = 9, font_size = 4,
 
 print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = NA, hl_col = "orange"){
   
+  vert_al = "t" # default vertical alignment (prevoir de recuperer cette info depuis print_info)
+  
 	v_ind <- ind_list[line_n,] %>% as.vector() %>% unlist() # retrieve data on the specified row number
 	
 	print_info <- print_info %>% dplyr::arrange(factor(field_name, levels = names(v_ind)))
@@ -258,10 +266,10 @@ print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = NA, 
 	
 	for (nlab in 1:N_labels){
 		cat(paste0("
-			 \\begin{boxlab}
+			 \\begin{boxlab",vert_al,"}
 		           ",
 							 labels[nlab,2],"
-			 \\end{boxlab}
+			 \\end{boxlab",vert_al,"}
 							 "
 		), 
 		file = file_out, append = TRUE)
