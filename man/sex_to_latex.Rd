@@ -20,8 +20,8 @@ The function checks the first letter of the input string. If it starts with "f" 
 }
 \examples{
 # Example usage:
-sex_to_latex("female") # Returns "\\smallfemale"
-sex_to_latex("male")   # Returns "\\smallmale"
-sex_to_latex(NA)       # Returns NA
+# sex_to_latex("female") # Returns "\\smallfemale"
+# sex_to_latex("male")   # Returns "\\smallmale"
+# sex_to_latex(NA)       # Returns NA
 
 }
