@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: >-
+  InsectLabelR: Designing labels for insects in collection
+message: 'If you use this software, please cite it as below.'
+type: software
+authors:
+  - given-names: Nicolas
+    family-names: Moiroux
+    email: nicolas.moiroux@ird.fr
+    orcid: 'https://orcid.org/0000-0001-6755-6167'
+  - given-names: Nil
+    family-names: Rahola
+    orcid: 'https://orcid.org/0000-0003-4067-6438'
+identifiers:
+  - type: doi
+    value: https://doi.org/10.5281/zenodo.14987479
+repository-code: 'https://github.com/Nmoiroux/InsectLabelR'
+version: 1.0.1
+date-released: '2026-02-13'
