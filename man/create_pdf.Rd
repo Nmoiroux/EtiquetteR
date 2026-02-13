@@ -39,7 +39,7 @@ formatting options, and what data to print.}
 \item{hl_col}{A character string specifying the highlight color for specific elements (default is "orange").}
 }
 \value{
-The function creates a LaTeX file, compiles it into a PDF, and saves the output
+The function creates a LaTeX file, compiles it into a PDF, and saves the outputs
 to the specified location. It does not return any value in R.
 }
 \description{

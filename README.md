@@ -3,15 +3,17 @@
 ## EtiquetteR: Generate Labels for Insect Pinning
 
 ### Overview
-EtiquetteR is an R package designed to streamline the creation of high-quality labels for insect pinning. By taking a dataset as input, EtiquetteR generates printable labels in PDF format, helping researchers and entomologists maintain accurate and standardized specimen records.
+EtiquetteR is an R package designed to streamline the creation of high-quality labels for insect pinning. By taking a dataset as input, EtiquetteR generates printable labels in PDF format, helping researchers and entomologists maintain accurate and standardized specimen records. 
 
-For enhanced accessibility, the package includes a user-friendly Shiny application, **InsectLabelR**, which provides a graphical interface for generating labels without requiring programming expertise.
+For enhanced accessibility, the package includes a user-friendly Shiny application, [**InsectLabelR**](https://nicolas-moiroux.shinyapps.io/InsectLabelR/), which provides a graphical interface for generating labels without requiring programming expertise and detailed user guides in both English and French .
 
 ### Features
 - Create insect pinning labels from dataset inputs.
 - Output labels as PDF files, ready for printing.
 - Flexible label formatting options.
 - User-friendly GUI via the Shiny app InsectLabelR.
+
+
 
 ---
 
@@ -28,7 +30,7 @@ devtools::install_github("Nmoiroux/EtiquetteR")
 #### Using the Shiny App: **InsectLabelR**
 The Shiny app provides an intuitive interface for generating insect pinning labels. You can access it online at [InsectLabelR](https://nicolas-moiroux.shinyapps.io/InsectLabelR/) or run it locally:
 ```R
-shiny::runApp(system.file("shiny", package = "EtiquetteR"))
+InsectLabelR()
 ```
 
 **Steps to Use the Shiny App**:
@@ -115,10 +117,16 @@ The generated `example_labels.pdf` file will contain insect pinning labels forma
 
 ### Dependencies
 - R version >= 4.0.0
-- Required packages: `dplyr`, `purrr`, `stringr`, `magrittr`
+- Required packages: `dplyr`, `purrr`, `stringr`, `magrittr`, `shiny`
 
 ### Troubleshooting
 - Ensure your dataset and parameters follow the specified structure.
 - Avoid special characters in field names to prevent LaTeX rendering issues.
+- Ensure you have a compatible installation of `pdflatex` see [https://www.latex-project.org/get/](https://www.latex-project.org/get/). For Debian or Debian-based (Ubuntu...) Linux distributions, the following commands should ensure a compatible `pdflatex` install:
+
+```
+sudo apt-get install texlive-latex-base
+sudo apt-get install texlive-latex-extra
+```
 
 ---

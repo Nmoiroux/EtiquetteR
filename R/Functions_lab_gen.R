@@ -337,7 +337,7 @@ print_bottom <- function(file_out){
 #' LaTeX document into a PDF using \code{pdflatex}.
 #'
 #' @return 
-#' The function creates a LaTeX file, compiles it into a PDF, and saves the output 
+#' The function creates a LaTeX file, compiles it into a PDF, and saves the outputs 
 #' to the specified location. It does not return any value in R.
 #'
 #' @examples
@@ -410,4 +410,18 @@ create_pdf <- function(file_out, ind_list, print_info,lab_width = 15, lab_height
 		# Print the error output from pdflatex
 		print(compile_result)
 	}
+}
+
+#' Launch the InsectLabelR Shiny application
+#'
+#' This function launches an interactive Shiny application allowing users
+#' to use EtiquetteR with either example datasets included in the package
+#' or user-provided data.
+#'
+#' @export
+InsectLabelR <- function() {
+  runApp(
+    system.file("shiny/app.R", package = "EtiquetteR"),
+    launch.browser = TRUE
+  )
 }
