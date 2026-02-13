@@ -416,7 +416,12 @@ create_pdf <- function(file_out, ind_list, print_info,lab_width = 15, lab_height
 #'
 #' This function launches an interactive Shiny application allowing users
 #' to use EtiquetteR with either example datasets included in the package
-#' or user-provided data.
+#' or user-provided data. It provides a graphical interface for generating 
+#' labels without requiring programming expertise. 
+#' 
+#' @return A **Shiny application** object.
+#'
+#' @family **Standalone Application**
 #'
 #' @export
 InsectLabelR <- function() {

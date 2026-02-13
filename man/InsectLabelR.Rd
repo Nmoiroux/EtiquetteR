@@ -6,8 +6,13 @@
 \usage{
 InsectLabelR()
 }
+\value{
+A \strong{Shiny application} object.
+}
 \description{
 This function launches an interactive Shiny application allowing users
 to use EtiquetteR with either example datasets included in the package
-or user-provided data.
+or user-provided data. It provides a graphical interface for generating
+labels without requiring programming expertise.
 }
+\concept{\strong{Standalone Application}}

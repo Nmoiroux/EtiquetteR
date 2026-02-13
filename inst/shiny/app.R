@@ -7,22 +7,7 @@ library(readODS) # For handling .ods files
 library(EtiquetteR) # Generate latex then pdf file
 library(DT) # display table
 library(editbl) # diplay editable table
-library(shinyjs) # ?? 
-
-# hack the editbl package to render table with trash buttons masked
-mybuttonsHTML <- "<div class=\"btn-group\">\n   <button id=\"%2$sedit_row_%1$s\" type=\"button\" class=\"btn btn-default action-button\" style=\"background-color: white\" onclick=\"get_id(this.id, &#39;%2$s&#39;);&#10;                          Shiny.setInputValue(&quot;%2$sedit&quot;, Math.random(), {priority: &quot;event&quot;});\">\n    <i class=\"far fa-pen-to-square\" role=\"presentation\" aria-label=\"pen-to-square icon\"></i>\n    \n  </button>\n</div>"
-# above is the - modified - output of the hidden function 'createButtonsHTML'
-# below is the modified fun 'createButtons' in order to render the modified html code
-mycreateButtons <- function(suffix, ns){
-  sprintf(
-    # Can be generated with createButtonsHTML
-    mybuttonsHTML,
-    suffix,
-    ns("")
-  )
-}
-#below replace the function 'createButtons' in the editbl package by above 'mycreateButtons'
-assignInNamespace("createButtons", mycreateButtons  , ns="editbl", pos="package:editbl")
+library(shinyjs) # disable fun
 
 empty_par <- function(var){
   liste_ind_coll_ex <- system.file("extdata", "liste_ind_coll_ex.ods", package = "EtiquetteR")
@@ -256,6 +241,8 @@ server <- function(input, output, session) {
                                                         title = "InsectLabelR_print_parameters"
                                                       )
                                        ), pageLength = 20),
+                        canDeleteRow = FALSE,
+                        canCloneRow  = FALSE,
                         filter = "none")
     updateTabsetPanel( # update active panel
       session = getDefaultReactiveDomain(),
