@@ -312,12 +312,11 @@ print_bottom <- function(file_out){
 #' The LaTeX code is adapted from work by Samuel Brown (see https://github.com/sdjbrown/publicFiles/blob/master/labels.tex 
 #' and http://the-praise-of-insects.blogspot.com/2010/03/latex-insect-labels.html).
 #'
-#' @param file_out A character string specifying the path to the LaTeX file that will be generated 
-#' and compiled into a PDF.
+#' @param file_out A character string specifying the name of returned LaTeX and PDF files.
 #' @param ind_list A data frame containing individual data. Each row represents data 
-#' for one label to be printed in the LaTeX document.
+#' for one individual to be printed in the document.
 #' @param print_info A data frame specifying the parameters for printing, including field names, 
-#' formatting options, and what data to print.
+#' formatting options, what data to print and, on how many labels.
 #' @param lab_width An integer specifying the width (in mm) for the labels (default is 15 mm).
 #' @param lab_height An integer specifying the height (in mm) for the labels (default is 9).
 #' @param font_size A real (one digit) specifying the size of the font for the label (default is 4)

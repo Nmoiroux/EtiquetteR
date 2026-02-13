@@ -17,14 +17,13 @@ create_pdf(
 )
 }
 \arguments{
-\item{file_out}{A character string specifying the path to the LaTeX file that will be generated
-and compiled into a PDF.}
+\item{file_out}{A character string specifying the name of returned LaTeX and PDF files.}
 
 \item{ind_list}{A data frame containing individual data. Each row represents data
-for one label to be printed in the LaTeX document.}
+for one individual to be printed in the document.}
 
 \item{print_info}{A data frame specifying the parameters for printing, including field names,
-formatting options, and what data to print.}
+formatting options, what data to print and, on how many labels.}
 
 \item{lab_width}{An integer specifying the width (in mm) for the labels (default is 15 mm).}
 
