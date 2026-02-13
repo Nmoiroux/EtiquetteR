@@ -1,11 +1,11 @@
 [![DOI](https://zenodo.org/badge/887177944.svg)](https://doi.org/10.5281/zenodo.14987479)
 
-## EtiquetteR: Generate Labels for Insect Pinning
+## InsectLabelR: Generate Labels for Insect Pinning
 
 ### Overview
-EtiquetteR is an R package designed to streamline the creation of high-quality labels for insect pinning. By taking a dataset as input, EtiquetteR generates printable labels in PDF format, helping researchers and entomologists maintain accurate and standardized specimen records. 
+InsectLabelR is an R package designed to streamline the creation of high-quality labels for insect pinning. By taking a dataset as input, InsectLabelR generates printable labels in PDF format, helping researchers and entomologists maintain accurate and standardized specimen records.
 
-For enhanced accessibility, the package includes a user-friendly Shiny application, [**InsectLabelR**](https://nicolas-moiroux.shinyapps.io/InsectLabelR/), which provides a graphical interface for generating labels without requiring programming expertise and detailed user guides in both English and French .
+For enhanced accessibility, the package includes a user-friendly [Shiny application](https://nicolas-moiroux.shinyapps.io/InsectLabelR/), which provides a graphical interface for generating labels without requiring programming expertise and detailed user guides in both English and French .
 
 ### Features
 - Create insect pinning labels from dataset inputs.
@@ -18,25 +18,26 @@ For enhanced accessibility, the package includes a user-friendly Shiny applicati
 ---
 
 ### Installation
-To install the EtiquetteR package, use the following command in R:
+To install the InsectLabelR package, use the following command in R:
 ```R
 # Install from GitHub
-devtools::install_github("Nmoiroux/EtiquetteR")
+devtools::install_github("Nmoiroux/InsectLabelR")
 ```
 
 ---
 
 ### Usage
-#### Using the Shiny App: **InsectLabelR**
+#### Using the Shiny App:
 The Shiny app provides an intuitive interface for generating insect pinning labels. You can access it online at [InsectLabelR](https://nicolas-moiroux.shinyapps.io/InsectLabelR/) or run it locally:
 ```R
-InsectLabelR()
+InsectLabelR_App()
+
 ```
 
 **Steps to Use the Shiny App**:
 1. **Upload Data**: Upload a `.csv`, `.xlsx`, or `.ods` file containing your insect data.
    - If using `.xlsx` or `.ods`, select the appropriate sheet containing the dataset.
-   - Example datasets are available in the [EtiquetteR repository](https://github.com/Nmoiroux/EtiquetteR/tree/main/inst/extdata).
+   - Example datasets are available in the [InsectLabelR repository](https://github.com/Nmoiroux/InsectLabelR/tree/main/inst/extdata).
 2. **Configure Printing Parameters**: Use a pre-configured table or manually fill out a printing parameters table, specifying:
    - Which fields to print
    - Number of labels per individual
@@ -57,12 +58,12 @@ Your dataset must include:
    - Includes the following columns: `field_name`, `print`, `label_no`, `order_lab`, and more.
    - Can be configured offline or within the app. 
 
-Example data and parameter tables are provided in the [EtiquetteR repository](https://github.com/Nmoiroux/EtiquetteR/tree/main/inst/extdata).
+Example data and parameter tables are provided in the [InsectLabelR repository](https://github.com/Nmoiroux/InsectLabelR/tree/main/inst/extdata).
 
 ---
 
 ### Example Workflow
-1. Download the example dataset: [liste_ind_coll_ex.ods](https://github.com/Nmoiroux/EtiquetteR/blob/main/inst/extdata/liste_ind_coll_ex.ods).
+1. Download the example dataset: [liste_ind_coll_ex.ods](https://github.com/Nmoiroux/InsectLabelR/blob/main/inst/extdata/liste_ind_coll_ex.ods).
 2. Upload the file and select the sheet "Table_data".
 3. Set printing parameters by selecting "Print_parameters_ex1" sheet or configure them manually.
 4. Adjust label size, font, and layout as needed.
@@ -72,13 +73,13 @@ Example data and parameter tables are provided in the [EtiquetteR repository](ht
 
 ### Usage in R
 
-EtiquetteR provides programmatic access to its core functionality. Below is an example using the `create_pdf()` function with a dataset embedded in the package.
+InsectLabelR provides programmatic access to its core functionality. Below is an example using the `create_pdf()` function with a dataset embedded in the package.
 
 #### Example: Generating Labels with Embedded Dataset
 
 ```R
 # Example dataset path (included in the package)
-data_path <- system.file("extdata", "liste_ind_coll_ex.ods", package = "EtiquetteR")
+data_path <- system.file("extdata", "liste_ind_coll_ex.ods", package = "InsectLabelR")
 
 # Load data table
 data_table <- readODS::read_ods(data_path, sheet = "Table_data")
@@ -90,7 +91,7 @@ par_table <- readODS::read_ods(data_path, sheet = "Print_parameters_ex1")
 output_pdf <- "example_labels.pdf"
 
 # Generate labels
-EtiquetteR::create_pdf(
+InsectLabelR::create_pdf(
   file_out = output_pdf,            # Name of pdf file
   ind_list = data_table ,           # Table of data
   print_info = par_table,           # Table of printing parameters

@@ -1,7 +1,8 @@
 bibentry(
-  bibtype  = "Misc",
-  title    = "EtiquetteR: an R package for designing insect collection labels",
+  bibtype = "Manual",
+  title    = "InsectLabelR: Designing labels for insects in collection",
   author   = "Nicolas Moiroux and Nil Rahola",
   year     = "2024",
+  note     = "R package version 0.1.0",
   doi      = "doi:10.5281/zenodo.14987479"
 )
