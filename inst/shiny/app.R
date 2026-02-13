@@ -8,6 +8,7 @@ library(InsectLabelR) # Generate latex then pdf file
 library(DT) # display table
 library(editbl) # diplay editable table
 library(shinyjs) # disable fun
+library(tools) # file_ext
 
 empty_par <- function(var){
   liste_ind_coll_ex <- system.file("extdata", "liste_ind_coll_ex.ods", package = "InsectLabelR")
@@ -90,7 +91,7 @@ server <- function(input, output, session) {
   # Reactive function to get sheet names and render sheet selector
   observeEvent(input$file1,{
     #req(input$file1)
-    file_ext <- tools::file_ext(input$file1$datapath)
+    file_ext <- file_ext(input$file1$datapath)
     # Get sheet names depending on the file type
     sheets <- NULL
     if (file_ext == "xlsx") {
@@ -137,7 +138,7 @@ server <- function(input, output, session) {
   
   observeEvent(input$file2,{
     req(input$file2)
-    file_ext_2 <- tools::file_ext(input$file2$datapath)
+    file_ext_2 <- file_ext(input$file2$datapath)
     #case 4
   })
   
@@ -158,7 +159,7 @@ server <- function(input, output, session) {
   individuals <- reactive({
     
     req(input$file1)
-    file_ext <- tools::file_ext(input$file1$datapath)
+    file_ext <- file_ext(input$file1$datapath)
     
     if (file_ext == "csv") { # use the correct function to read the data table according to file extension (& selected sheet)
       read_tsv(input$file1$datapath) # require tab-delimited csv
@@ -181,7 +182,7 @@ server <- function(input, output, session) {
     col_name <- colnames(individuals())
     print_params <- NULL
     req(input$file1)
-    f_ext <- tools::file_ext(input$file1$datapath) # retrieve file extension of the data table source
+    f_ext <- file_ext(input$file1$datapath) # retrieve file extension of the data table source
     #print(paste(f_ext, input$file1$datapath, input$sheet_par, input$file2$datapath))
     if (f_ext == "xlsx" ){ #if data table is from an excel file
       req(input$sheet_par) # retrieve user defined sheet name for printing parameter

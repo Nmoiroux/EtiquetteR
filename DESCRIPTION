@@ -13,20 +13,20 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports: 
     dplyr,
-    purrr,
     stringr,
     magrittr,
     shiny,
+    tools
+Suggests: 
+    testthat (>= 3.0.0),
     shinyjs,
     readxl,
     readr,
     readODS,
     DT,
-    editbl
-Suggests: 
-    testthat (>= 3.0.0)
+    editbl (>= 1.1.0)
 Config/testthat/edition: 3
 Depends: 
-    R (>= 3.5)
+    R (>= 4.0)
 LazyData: true
 SystemRequirements: pdflatex

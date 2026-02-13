@@ -204,7 +204,6 @@ print_header <- function(file_out, lab_width = 15,lab_height = 9, font_size = 4,
 #' # print_line("output.tex", ind_list, print_info, line_n = 1)
 #' @importFrom dplyr arrange mutate if_else filter select group_by summarise
 #' @importFrom magrittr %>%
-#' @importFrom purrr pmap_chr
 #' @importFrom stringr str_c
 #' 
 #### create labels per each line of the table
@@ -215,7 +214,7 @@ print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = NA, 
   
 	v_ind <- ind_list[line_n,] %>% as.vector() %>% unlist() # retrieve data on the specified row number
 	
-	print_info <- print_info %>% dplyr::arrange(factor(field_name, levels = names(v_ind)))
+	print_info <- print_info %>% arrange(factor(field_name, levels = names(v_ind)))
 	
 	if ("field_name_to_print" %in% colnames(print_info)){
 	  colnames(print_info)[which(colnames(print_info)=="field_name_to_print")] <- "prefix"
@@ -237,25 +236,22 @@ print_line <- function(file_out, ind_list, print_info, line_n, col_N_name = NA, 
 	
 	
 	print_info <- print_info %>% # latex code for each information is prepared according to user-defined print parameters
-		dplyr::mutate(print_txt = dplyr::if_else(print == 1, data, NA, NA)) %>% # retrieve data only for column containing information to print
-	  dplyr::mutate(print_txt = dplyr::if_else(print_sex_symbol == 1 , v_sex_to_latex(print_txt), print_txt, print_txt)) %>% # add Latex codes for sex symbols
-		dplyr::filter(!(is.na(print_txt))) %>% # filter dataset to keep only information to be printed (remove blank fields)
-		dplyr::mutate(print_txt = dplyr::if_else(print_opt_it == 1, stringr::str_c("{\\scinm ", print_txt, "}"), print_txt, print_txt)) %>% # add latex code for italic
-		dplyr::mutate(print_txt = dplyr::if_else(print_opt_par == 1, stringr::str_c("(", print_txt, ")"), print_txt, print_txt)) %>% # add brackets
-		dplyr::mutate(print_txt = dplyr::if_else(print_opt_hl == 1, stringr::str_c("\\begingroup\\fboxsep=0pt\\colorbox{",hl_col,"}{",print_txt,"}\\endgroup"), print_txt, print_txt)) %>% 
-	  dplyr::mutate(print_txt = dplyr::if_else(is.na(prefix) | is.null(prefix) | prefix == "", print_txt, stringr::str_c(prefix," ", print_txt))) %>%
-		#dplyr::mutate(field_name_to_print = dplyr::if_else(print_field_name == 1 & is.na(field_name_to_print), field_name, field_name_to_print)) %>% # define field name to print before information, if specified
-		#dplyr::mutate(print_txt = purrr::pmap_chr(list(print_txt, print_field_name,field_name_to_print), function(x,y,z) dplyr::if_else(y == 1, 
-		#																																																					 stringr::str_c(z," ", x), x, x))) %>%# add a field name before information to print, if specified
-		dplyr::mutate(print_txt = dplyr::if_else(line_break == 1, stringr::str_c(print_txt, "\\","\\"), print_txt, print_txt)) # add latex code for break line
+		mutate(print_txt = if_else(print == 1, data, NA, NA)) %>% # retrieve data only for column containing information to print
+	  mutate(print_txt = if_else(print_sex_symbol == 1 , v_sex_to_latex(print_txt), print_txt, print_txt)) %>% # add Latex codes for sex symbols
+		filter(!(is.na(print_txt))) %>% # filter dataset to keep only information to be printed (remove blank fields)
+		mutate(print_txt = if_else(print_opt_it == 1, str_c("{\\scinm ", print_txt, "}"), print_txt, print_txt)) %>% # add latex code for italic
+		mutate(print_txt = if_else(print_opt_par == 1, str_c("(", print_txt, ")"), print_txt, print_txt)) %>% # add brackets
+		mutate(print_txt = if_else(print_opt_hl == 1, str_c("\\begingroup\\fboxsep=0pt\\colorbox{",hl_col,"}{",print_txt,"}\\endgroup"), print_txt, print_txt)) %>% 
+	  mutate(print_txt = if_else(is.na(prefix) | is.null(prefix) | prefix == "", print_txt, str_c(prefix," ", print_txt))) %>%
+		mutate(print_txt = if_else(line_break == 1, str_c(print_txt, "\\","\\"), print_txt, print_txt)) # add latex code for break line
 	
 	# concatenate Latex code / Info to print for each individual label
 	labels <- print_info %>% 
-		dplyr::filter(print==1) %>%
-		dplyr::arrange(label_no, order_lab) %>% 
-		dplyr::select(label_no, print_txt) %>%
-		dplyr::group_by(label_no) %>%
-		dplyr::summarise(print_lab = paste(print_txt, collapse = " ")) 
+		filter(print==1) %>%
+		arrange(label_no, order_lab) %>% 
+		select(label_no, print_txt) %>%
+		group_by(label_no) %>%
+		summarise(print_lab = paste(print_txt, collapse = " ")) 
 	
 	# add code to the Latex file
 	cat(paste0("
@@ -354,15 +350,17 @@ print_bottom <- function(file_out){
 #' #  hl_col = "orange"              # Color for highlighted text
 #' #  )
 #'   
+#' @importFrom stringr str_sub
+#' @importFrom tools file_ext
 #' @export
 
 create_pdf <- function(file_out, ind_list, print_info,lab_width = 15, lab_height = 9, font_size = 4, n_col = 8, col_N_name = NA, hl_col = "orange"){
   
   # function that check extension of file_out and change to .tex if it is .pdf
-  file_out_ext <- tools::file_ext(file_out)
+  file_out_ext <- file_ext(file_out)
   ext_s <- nchar(file_out_ext)
   if (file_out_ext == "pdf"){
-    file_out <- paste0(stringr::str_sub(file_out,1,-(ext_s+2)),".tex")
+    file_out <- paste0(str_sub(file_out,1,-(ext_s+2)),".tex")
   }
   
 	# Step 1: Write the LaTeX document
@@ -422,6 +420,8 @@ create_pdf <- function(file_out, ind_list, print_info,lab_width = 15, lab_height
 #' @return A **Shiny application** object.
 #'
 #' @family **Standalone Application**
+#' 
+#' @importFrom shiny runApp
 #'
 #' @export
 InsectLabelR_App <- function() {
