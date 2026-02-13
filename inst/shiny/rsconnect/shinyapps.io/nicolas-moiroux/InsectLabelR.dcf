@@ -5,7 +5,7 @@ account: nicolas-moiroux
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 12992628
-bundleId: 9349661
+bundleId: 9352254
 url: https://nicolas-moiroux.shinyapps.io/InsectLabelR/
 version: 1
 asMultiple: FALSE
