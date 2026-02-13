@@ -4,17 +4,17 @@ library(markdown) # display user guide
 library(readr) # reading csv file
 library(readxl) # reading xlsx files
 library(readODS) # For handling .ods files
-library(EtiquetteR) # Generate latex then pdf file
+library(InsectLabelR) # Generate latex then pdf file
 library(DT) # display table
 library(editbl) # diplay editable table
 library(shinyjs) # disable fun
 
 empty_par <- function(var){
-  liste_ind_coll_ex <- system.file("extdata", "liste_ind_coll_ex.ods", package = "EtiquetteR")
-  pp_EtiquetteR <- read_ods(liste_ind_coll_ex, sheet = "Print_parameters_ex2")
-  n_col <- ncol(pp_EtiquetteR)
+  liste_ind_coll_ex <- system.file("extdata", "liste_ind_coll_ex.ods", package = "InsectLabelR")
+  pp_InsectLabelR <- read_ods(liste_ind_coll_ex, sheet = "Print_parameters_ex2")
+  n_col <- ncol(pp_InsectLabelR)
   n_row <- length(var)
-  pp_empty <- as.data.frame(pp_EtiquetteR[0,])
+  pp_empty <- as.data.frame(pp_InsectLabelR[0,])
   a <- matrix(data = c(var,rep(NA,n_row*(n_col-1))),ncol = n_col)
   pp_empty[1:length(var),] <- NA
   pp_empty$field_name <- var
@@ -65,9 +65,9 @@ ui <- fluidPage(
         ), 
         tabPanel("About", value = "panel4", # Tab About----
                  h3("About"),
-                 tags$p("This shiny app is a friendly GUI for the EtiquetteR package : Moiroux (1,2), Nicolas, and Nil Rahola (1,3). ‘EtiquetteR: An R Package for Designing Labels for Insect in Collections’, 2024. https://github.com/Nmoiroux/EtiquetteR .
+                 tags$p("This shiny app is a friendly GUI for the InsectLabelR package : Moiroux (1,2), Nicolas, and Nil Rahola (1,3). ‘InsectLabelR: Designing labels for insects in collection’, 2024. doi: 10.5281/zenodo.14987479. https://github.com/Nmoiroux/InsectLabelR .
 "),
-                 tags$p("The EtiquetteR package allow to generate a LaTeX document from a data table and a printing parameters table, and then compiling the LaTeX code 
+                 tags$p("The InsectLabelR package allow to generate a LaTeX document from a data table and a printing parameters table, and then compiling the LaTeX code 
                         into a PDF document. The LaTeX code is adapted from work by Samuel Brown (see https://github.com/sdjbrown/publicFiles/blob/master/labels.tex 
                                                                                                   and http://the-praise-of-insects.blogspot.com/2010/03/latex-insect-labels.html)."),
                  tags$p("(1) MIVEGEC, Univ. Montpellier, IRD, CNRS, Montpellier, France ; (2) Pôle de zoologie médicale, Institut Pasteur de Dakar, Sénégal ; (3) Institut Pasteur de Madagascar, Antananarivo, Madagascar"),
@@ -176,7 +176,7 @@ server <- function(input, output, session) {
   observeEvent(input$file2,{
     print(input$file2$datapath)
   })
-  # # Load the print_parameter table or template from EtiquetteR package
+  # # Load the print_parameter table or template from InsectLabelR package
   print_informations <- reactive({
     col_name <- colnames(individuals())
     print_params <- NULL
@@ -266,7 +266,7 @@ server <- function(input, output, session) {
       
       df_ind <- individuals()
       print(print_par$df)
-      # call EtiquetteR::create_pdf function
+      # call InsectLabelR::create_pdf function
       create_pdf(
         file_out = "labels.tex",
         ind_list = df_ind,

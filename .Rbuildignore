@@ -2,6 +2,6 @@
 ^renv\.lock$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-W_folder*
 ^data-raw$
 ^\.github$
+^inst/shiny/rsconnect$
