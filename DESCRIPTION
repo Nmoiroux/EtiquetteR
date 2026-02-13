@@ -16,7 +16,13 @@ Imports:
     purrr,
     stringr,
     magrittr,
-    shiny
+    shiny,
+    shinyjs,
+    readxl,
+    readr,
+    readODS,
+    DT,
+    editbl
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
